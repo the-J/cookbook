@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import { API, graphqlOperation } from "aws-amplify"
+import { createTodo } from "./graphql/mutations"
+
 
 function App() {
+
+    const [todoName, setTodoName] = useState('')
+  const handleChange = (evt) => {
+    setTodoName(evt.target.value)
+  }
+
+  const addTodo = async () => {
+    await API.graphql(
+        graphqlOperation(createTodo, { input: { name: todoName } })
+    )
+    setTodoName('') // make the input blank again
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <input type="text" value={todoName} onChange={handleChange} />
+        <button onClick={addTodo}>Add ToDo</button>
+      </div>
   );
 }
 
