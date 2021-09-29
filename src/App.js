@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import "./App.sass";
+import "./App.styles.sass";
 import { API, graphqlOperation } from "aws-amplify";
-import { createTodo } from "./graphql/mutations";
+import { createBlog } from "./graphql/mutations";
 import { HomeLayout } from "./layouts";
+import { nanoid } from "nanoid";
 
 function App() {
   const [todoName, setTodoName] = useState("");
@@ -11,9 +12,18 @@ function App() {
   };
 
   const addTodo = async () => {
-    await API.graphql(
-      graphqlOperation(createTodo, { input: { name: todoName } })
-    );
+    const newBlog = {
+      id: nanoid(),
+      name: todoName,
+      posts: [
+        {
+          id: nanoid(),
+          title: todoName + " post name",
+        },
+      ],
+    };
+
+    await API.graphql(graphqlOperation(createBlog, { input: { ...newBlog } }));
 
     setTodoName(""); // make the input blank again
   };
