@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "CookBook",
+  "name": "Cook Book by MBJ",
   "icons": [
     {
       "src": "favicon.ico",
