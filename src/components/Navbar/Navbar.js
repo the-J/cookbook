@@ -1,48 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [openState, setOpenState] = useState(false);
+
+  const handleChangeState = () => setOpenState(!openState);
+
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <a className="navbar-item" href="https://bulma.io">
-          <img
-            src="https://via.placeholder.com/150"
-            width="112"
-            height="28"
-            alt="logo"
-          />
-        </a>
+    <nav
+      className="navbar"
+      role="navigation"
+      aria-label="main navigation"
+      onClick={handleChangeState}
+    >
+      <a
+        role="button"
+        className={openState ? "navbar-burger is-active" : "navbar-burger"}
+        aria-label="menu"
+        aria-expanded="false"
+        data-target="navbarBasicExample"
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </a>
 
-        <a
-          role="button"
-          className="navbar-burger"
-          aria-label="menu"
-          aria-expanded="false"
-          data-target="navbarBasicExample"
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </a>
-      </div>
-
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div
+        id="navbarBasicExample"
+        className={openState ? "navbar-menu is-active" : "navbar-menu "}
+      >
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
-
-          <a className="navbar-item">Documentation</a>
-
-          <div className="navbar-item has-dropdown is-hoverable">
-            <a className="navbar-link">More</a>
-
-            <div className="navbar-dropdown">
-              <a className="navbar-item">About</a>
-              <a className="navbar-item">Jobs</a>
-              <a className="navbar-item">Contact</a>
-              <hr className="navbar-divider" />
-              <a className="navbar-item">Report an issue</a>
-            </div>
-          </div>
+          <a className="navbar-item">Settings</a>
+          <hr className="navbar-divider" />
+          <a className="navbar-item">Log out</a>
         </div>
 
         <div className="navbar-end">
