@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Recipe } from "../index";
+import { Recipe } from "components/index";
 
 const RecipeList = ({ recipes }) => {
   if (!recipes.length) return null;

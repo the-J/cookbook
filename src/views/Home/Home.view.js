@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { listBlogs } from "../../graphql/queries";
-import { createBlog } from "../../graphql/mutations";
-import { onCreateBlog } from "../../graphql/subscriptions";
-import { HomeLayout } from "../../layouts";
-import { RecipeList } from "../../components";
+import { createBlog } from "graphql/mutations";
+import { listBlogs } from "graphql/queries";
+import { onCreateBlog } from "graphql/subscriptions";
+import { HomeLayout } from "layouts";
+import { RecipeList } from "components";
 
 const HomeView = () => {
   const [blogName, setBlogName] = useState("");

@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.styles.sass";
-
-import { HomeView } from "./views";
+import { HomeView } from "views";
 
 const App = () => {
   return <HomeView />;
