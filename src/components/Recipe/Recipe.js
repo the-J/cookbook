@@ -19,7 +19,7 @@ const Recipe = ({ recipe }) => {
               <figure className="image is-48x48">
                 <img
                   src="https://bulma.io/images/placeholders/96x96.png"
-                  alt="Placeholder image"
+                  alt="Placeholder"
                 />
               </figure>
             </div>
