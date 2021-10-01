@@ -1,6 +1,6 @@
 projects:
   cookbook:
-    schemaPath: src/graphql/schema.json
+    schemaPath: amplify/backend/api/cookbook/build/schema.graphql
     includes:
       - src/graphql/**/*.js
     excludes:
