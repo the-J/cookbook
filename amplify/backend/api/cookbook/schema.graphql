@@ -1,16 +1,52 @@
-type Blog @model {
+type Recipe
+@model
+@key(fields: ["creatorID", "createdAt"])
+@key(name: "creatorID", fields: ["creatorID"], queryField: "recipeByCreatorID")
+@key(name: "ingredientIDs", fields: ["ingredientIDs"])
+{
+    id: ID!
+    time: String
+    difficulty: Int
+    ingredientIDs: [ID]
+    creatorID: ID!
+    createdAt: String!
+}
+
+type PrepStep
+@model
+@key(name: "recipeIDIndex", fields: ["recipeID"], queryField: "stepByRecipeID")
+{
+    id: ID!
+    entryNumber: Int
+    description: String
+    time: String
+    recipeID: ID!
+    ingredientIDs: [ID]
+    steps : [Recipe] @connection(fields: ["id"])
+}
+
+type Ingredient
+@model
+@key (name: "categoryIndex", fields: ["category"], queryField: "ingredientByCategory")
+{
     id: ID!
     name: String!
-    posts: [Post] @connection(name: "BlogPosts")
+    category: [INGREDIENTCATEGORY]
+    scale: [INGREDIENTSCALE]
+    ingredientIDs: [Recipe] @connection(keyName: "ingredientIDs", fields: ["id"])
 }
-type Post @model {
-    id: ID!
-    title: String!
-    blog: Blog @connection(name: "BlogPosts")
-    comments: [Comment] @connection(name: "PostComments")
+
+enum INGREDIENTSCALE {
+    KG
+    G
+    ML
+    SZTUK
 }
-type Comment @model {
-    id: ID!
-    content: String
-    post: Post @connection(name: "PostComments")
+
+enum INGREDIENTCATEGORY {
+    WARZYWO
+    NABIAL
+    OWOC
+    PRZYPRAWA
+    MIESO
 }

@@ -1,15 +1,137 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateBlog = /* GraphQL */ `
-  subscription OnCreateBlog {
-    onCreateBlog {
+export const onCreateRecipe = /* GraphQL */ `
+  subscription OnCreateRecipe {
+    onCreateRecipe {
+      id
+      time
+      difficulty
+      ingredientIDs
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateRecipe = /* GraphQL */ `
+  subscription OnUpdateRecipe {
+    onUpdateRecipe {
+      id
+      time
+      difficulty
+      ingredientIDs
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteRecipe = /* GraphQL */ `
+  subscription OnDeleteRecipe {
+    onDeleteRecipe {
+      id
+      time
+      difficulty
+      ingredientIDs
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreatePrepStep = /* GraphQL */ `
+  subscription OnCreatePrepStep {
+    onCreatePrepStep {
+      id
+      entryNumber
+      description
+      time
+      recipeID
+      ingredientIDs
+      steps {
+        items {
+          id
+          time
+          difficulty
+          ingredientIDs
+          creatorID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdatePrepStep = /* GraphQL */ `
+  subscription OnUpdatePrepStep {
+    onUpdatePrepStep {
+      id
+      entryNumber
+      description
+      time
+      recipeID
+      ingredientIDs
+      steps {
+        items {
+          id
+          time
+          difficulty
+          ingredientIDs
+          creatorID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeletePrepStep = /* GraphQL */ `
+  subscription OnDeletePrepStep {
+    onDeletePrepStep {
+      id
+      entryNumber
+      description
+      time
+      recipeID
+      ingredientIDs
+      steps {
+        items {
+          id
+          time
+          difficulty
+          ingredientIDs
+          creatorID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateIngredient = /* GraphQL */ `
+  subscription OnCreateIngredient {
+    onCreateIngredient {
       id
       name
-      posts {
+      category
+      scale
+      ingredientIDs {
         items {
           id
-          title
+          time
+          difficulty
+          ingredientIDs
+          creatorID
           createdAt
           updatedAt
         }
@@ -20,15 +142,20 @@ export const onCreateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateBlog = /* GraphQL */ `
-  subscription OnUpdateBlog {
-    onUpdateBlog {
+export const onUpdateIngredient = /* GraphQL */ `
+  subscription OnUpdateIngredient {
+    onUpdateIngredient {
       id
       name
-      posts {
+      category
+      scale
+      ingredientIDs {
         items {
           id
-          title
+          time
+          difficulty
+          ingredientIDs
+          creatorID
           createdAt
           updatedAt
         }
@@ -39,178 +166,24 @@ export const onUpdateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteBlog = /* GraphQL */ `
-  subscription OnDeleteBlog {
-    onDeleteBlog {
+export const onDeleteIngredient = /* GraphQL */ `
+  subscription OnDeleteIngredient {
+    onDeleteIngredient {
       id
       name
-      posts {
+      category
+      scale
+      ingredientIDs {
         items {
           id
-          title
+          time
+          difficulty
+          ingredientIDs
+          creatorID
           createdAt
           updatedAt
         }
         nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
-      id
-      content
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment {
-    onUpdateComment {
-      id
-      content
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment {
-    onDeleteComment {
-      id
-      content
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
       }
       createdAt
       updatedAt

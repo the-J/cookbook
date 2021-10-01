@@ -1,15 +1,113 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBlog = /* GraphQL */ `
-  query GetBlog($id: ID!) {
-    getBlog(id: $id) {
+export const getRecipe = /* GraphQL */ `
+  query GetRecipe($creatorID: ID!, $createdAt: String!) {
+    getRecipe(creatorID: $creatorID, createdAt: $createdAt) {
+      id
+      time
+      difficulty
+      ingredientIDs
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listRecipes = /* GraphQL */ `
+  query ListRecipes(
+    $creatorID: ID
+    $createdAt: ModelStringKeyConditionInput
+    $filter: ModelRecipeFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listRecipes(
+      creatorID: $creatorID
+      createdAt: $createdAt
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        time
+        difficulty
+        ingredientIDs
+        creatorID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getPrepStep = /* GraphQL */ `
+  query GetPrepStep($id: ID!) {
+    getPrepStep(id: $id) {
+      id
+      entryNumber
+      description
+      time
+      recipeID
+      ingredientIDs
+      steps {
+        items {
+          id
+          time
+          difficulty
+          ingredientIDs
+          creatorID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listPrepSteps = /* GraphQL */ `
+  query ListPrepSteps(
+    $filter: ModelPrepStepFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPrepSteps(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        entryNumber
+        description
+        time
+        recipeID
+        ingredientIDs
+        steps {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getIngredient = /* GraphQL */ `
+  query GetIngredient($id: ID!) {
+    getIngredient(id: $id) {
       id
       name
-      posts {
+      category
+      scale
+      ingredientIDs {
         items {
           id
-          title
+          time
+          difficulty
+          ingredientIDs
+          creatorID
           createdAt
           updatedAt
         }
@@ -20,17 +118,19 @@ export const getBlog = /* GraphQL */ `
     }
   }
 `;
-export const listBlogs = /* GraphQL */ `
-  query ListBlogs(
-    $filter: ModelBlogFilterInput
+export const listIngredients = /* GraphQL */ `
+  query ListIngredients(
+    $filter: ModelIngredientFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listIngredients(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
-        posts {
+        category
+        scale
+        ingredientIDs {
           nextToken
         }
         createdAt
@@ -40,51 +140,57 @@ export const listBlogs = /* GraphQL */ `
     }
   }
 `;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
-      id
-      title
-      blog {
-        id
-        name
-        posts {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
+export const recipeByCreatorID = /* GraphQL */ `
+  query RecipeByCreatorID(
+    $creatorID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelRecipeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    recipeByCreatorID(
+      creatorID: $creatorID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
+        time
+        difficulty
+        ingredientIDs
+        creatorID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stepByRecipeID = /* GraphQL */ `
+  query StepByRecipeID(
+    $recipeID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelPrepStepFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    stepByRecipeID(
+      recipeID: $recipeID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        entryNumber
+        description
+        time
+        recipeID
+        ingredientIDs
+        steps {
           nextToken
         }
         createdAt
@@ -94,46 +200,28 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
-      id
-      content
-      post {
-        id
-        title
-        blog {
-          id
-          name
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
+export const ingredientByCategory = /* GraphQL */ `
+  query IngredientByCategory(
+    $category: INGREDIENTCATEGORY
+    $sortDirection: ModelSortDirection
+    $filter: ModelIngredientFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    ingredientByCategory(
+      category: $category
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        content
-        post {
-          id
-          title
-          createdAt
-          updatedAt
+        name
+        category
+        scale
+        ingredientIDs {
+          nextToken
         }
         createdAt
         updatedAt
