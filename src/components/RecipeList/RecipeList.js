@@ -1,17 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Recipe } from "components/index";
 
 const RecipeList = ({ recipes }) => {
-  if (!recipes.length) return null;
+  const sortPosts = (a, b) => a.updatedAt < b.updatedAt;
+  const [sortedRecipes, setSortRecipes] = useState(recipes.sort(sortPosts));
 
-  return (
-    <ul>
-      {recipes.map((recipe) => (
-        <Recipe key={recipe.id} recipe={recipe} />
-      ))}
-    </ul>
-  );
+  useEffect(() => {
+    setSortRecipes(recipes.sort(sortPosts));
+  }, [recipes]);
+
+  if (!sortedRecipes.length) return null;
+
+  return sortedRecipes.map((recipe) => (
+    <Recipe key={recipe.id} recipe={recipe} />
+  ));
 };
 
 RecipeList.propTypes = {
