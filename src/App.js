@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.styles.sass";
+import "App.styles.scss";
 import { HomeView } from "views";
 
 const App = () => {
