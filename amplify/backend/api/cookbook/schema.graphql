@@ -13,7 +13,7 @@ type Recipe
 }
 
 type PrepStep
-@model
+@model(subscriptions: null)
 @key(name: "recipeIDIndex", fields: ["recipeID"], queryField: "stepByRecipeID")
 {
     id: ID!
