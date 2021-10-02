@@ -10,9 +10,33 @@ export const createRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -26,9 +50,33 @@ export const updateRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -42,9 +90,33 @@ export const deleteRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -61,18 +133,6 @@ export const createPrepStep = /* GraphQL */ `
       time
       recipeID
       ingredientIDs
-      steps {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -90,18 +150,6 @@ export const updatePrepStep = /* GraphQL */ `
       time
       recipeID
       ingredientIDs
-      steps {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -119,18 +167,6 @@ export const deletePrepStep = /* GraphQL */ `
       time
       recipeID
       ingredientIDs
-      steps {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -146,18 +182,6 @@ export const createIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -173,18 +197,6 @@ export const updateIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -200,18 +212,6 @@ export const deleteIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }

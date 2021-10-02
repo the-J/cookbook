@@ -10,6 +10,25 @@
       "StackName": "amplify-cookbook-dev-190833",
       "StackId": "arn:aws:cloudformation:eu-west-1:584169389934:stack/amplify-cookbook-dev-190833/b8644570-207e-11ec-9425-0a67b88e3a91",
       "AmplifyAppId": "d1iibjuvrs8i83"
+    },
+    "categories": {
+      "function": {
+        "cookbookcaf64b33CustomMessage": {
+          "REDIRECTURL": "https://cookbook.yeahmaybedoit.com/sign-in",
+          "EMAILSUBJECT": "Welcome to your CookBook!",
+          "EMAILMESSAGE": "This is your confirmation link! *CLICK CLICK*",
+          "deploymentBucketName": "amplify-cookbook-dev-190833-deployment",
+          "s3Key": "amplify-builds/cookbookcaf64b33CustomMessage-51334d62394271705133-build.zip"
+        },
+        "cookbookcaf64b33PostConfirmation": {
+          "GROUP": "cook",
+          "deploymentBucketName": "amplify-cookbook-dev-190833-deployment",
+          "s3Key": "amplify-builds/cookbookcaf64b33PostConfirmation-4a2b6b48454d61366576-build.zip"
+        }
+      },
+      "auth": {
+        "cookbookcaf64b33": {}
+      }
     }
   }
 }

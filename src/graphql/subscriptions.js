@@ -7,9 +7,33 @@ export const onCreateRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -20,9 +44,33 @@ export const onUpdateRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
@@ -33,87 +81,33 @@ export const onDeleteRecipe = /* GraphQL */ `
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePrepStep = /* GraphQL */ `
-  subscription OnCreatePrepStep {
-    onCreatePrepStep {
-      id
-      entryNumber
-      description
-      time
-      recipeID
       ingredientIDs
-      steps {
+      ingredients {
         items {
           id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
+          name
+          category
+          scale
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdatePrepStep = /* GraphQL */ `
-  subscription OnUpdatePrepStep {
-    onUpdatePrepStep {
-      id
-      entryNumber
-      description
-      time
-      recipeID
-      ingredientIDs
       steps {
         items {
           id
+          entryNumber
+          description
           time
-          difficulty
+          recipeID
           ingredientIDs
-          creatorID
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePrepStep = /* GraphQL */ `
-  subscription OnDeletePrepStep {
-    onDeletePrepStep {
-      id
-      entryNumber
-      description
-      time
-      recipeID
-      ingredientIDs
-      steps {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
       updatedAt
     }
   }
@@ -125,18 +119,6 @@ export const onCreateIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -149,18 +131,6 @@ export const onUpdateIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -173,18 +143,6 @@ export const onDeleteIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }

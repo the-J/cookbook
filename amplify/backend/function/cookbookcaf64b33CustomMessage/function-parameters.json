@@ -1,0 +1,26 @@
+{
+  "trigger": true,
+  "modules": [
+    "verification-link"
+  ],
+  "parentResource": "cookbookcaf64b33",
+  "functionName": "cookbookcaf64b33CustomMessage",
+  "resourceName": "cookbookcaf64b33CustomMessage",
+  "parentStack": "auth",
+  "triggerEnvs": [
+    {
+      "key": "RESOURCENAME",
+      "value": "resourceName"
+    }
+  ],
+  "triggerDir": "/home/thej/.nvm/versions/node/v14.15.4/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/CustomMessage",
+  "triggerTemplate": "CustomMessage.json.ejs",
+  "triggerEventPath": "CustomMessage.event.json",
+  "roleName": "cookbookcaf64b33CustomMessage",
+  "skipEdit": true,
+  "REDIRECTURL": "https://cookbook.yeahmaybedoit.com/sign-in",
+  "EMAILSUBJECT": "Welcome to your CookBook!",
+  "EMAILMESSAGE": "This is your confirmation link! *CLICK CLICK*",
+  "RESOURCENAME": "resourceName",
+  "enableCors": false
+}

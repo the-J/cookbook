@@ -1,20 +1,27 @@
+#this would be beautiful but the idea is
+#just stupid when you think about it
+#type Recipe
+#@model
+#@key(fields: ["creatorID"]) {}
+
 type Recipe
 @model
-@key(fields: ["creatorID", "createdAt"])
-@key(name: "creatorID", fields: ["creatorID"], queryField: "recipeByCreatorID")
-@key(name: "ingredientIDs", fields: ["ingredientIDs"])
+@key(name: "byCreatorID", fields: ["creatorID"], queryField: "recipeByCreatorID")
+@key(name: "byIngredientIDs", fields: ["ingredientIDs"], queryField: "recipeByIngredientIDs")
 {
     id: ID!
     time: String
     difficulty: Int
-    ingredientIDs: [ID]
     creatorID: ID!
     createdAt: String!
+    ingredientIDs: [ID]
+    ingredients: [Ingredient] @connection(fields: ["id"])
+    steps : [PrepStep] @connection(keyName: "byRecipeID", fields: ["id"])
 }
 
 type PrepStep
 @model(subscriptions: null)
-@key(name: "recipeIDIndex", fields: ["recipeID"], queryField: "stepByRecipeID")
+@key(name: "byRecipeID", fields: ["recipeID"])
 {
     id: ID!
     entryNumber: Int
@@ -22,18 +29,16 @@ type PrepStep
     time: String
     recipeID: ID!
     ingredientIDs: [ID]
-    steps : [Recipe] @connection(fields: ["id"])
 }
 
 type Ingredient
 @model
-@key (name: "categoryIndex", fields: ["category"], queryField: "ingredientByCategory")
+@key (name: "byCategoryIndex", fields: ["category"], queryField: "ingredientByCategory")
 {
     id: ID!
     name: String!
     category: [INGREDIENTCATEGORY]
     scale: [INGREDIENTSCALE]
-    ingredientIDs: [Recipe] @connection(keyName: "ingredientIDs", fields: ["id"])
 }
 
 enum INGREDIENTSCALE {

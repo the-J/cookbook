@@ -2,42 +2,62 @@
 // this is an auto generated file. This will be overwritten
 
 export const getRecipe = /* GraphQL */ `
-  query GetRecipe($creatorID: ID!, $createdAt: String!) {
-    getRecipe(creatorID: $creatorID, createdAt: $createdAt) {
+  query GetRecipe($id: ID!) {
+    getRecipe(id: $id) {
       id
       time
       difficulty
-      ingredientIDs
       creatorID
       createdAt
+      ingredientIDs
+      ingredients {
+        items {
+          id
+          name
+          category
+          scale
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      steps {
+        items {
+          id
+          entryNumber
+          description
+          time
+          recipeID
+          ingredientIDs
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       updatedAt
     }
   }
 `;
 export const listRecipes = /* GraphQL */ `
   query ListRecipes(
-    $creatorID: ID
-    $createdAt: ModelStringKeyConditionInput
     $filter: ModelRecipeFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
-    listRecipes(
-      creatorID: $creatorID
-      createdAt: $createdAt
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
+    listRecipes(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         time
         difficulty
-        ingredientIDs
         creatorID
         createdAt
+        ingredientIDs
+        ingredients {
+          nextToken
+        }
+        steps {
+          nextToken
+        }
         updatedAt
       }
       nextToken
@@ -53,18 +73,6 @@ export const getPrepStep = /* GraphQL */ `
       time
       recipeID
       ingredientIDs
-      steps {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -84,9 +92,6 @@ export const listPrepSteps = /* GraphQL */ `
         time
         recipeID
         ingredientIDs
-        steps {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -101,18 +106,6 @@ export const getIngredient = /* GraphQL */ `
       name
       category
       scale
-      ingredientIDs {
-        items {
-          id
-          time
-          difficulty
-          ingredientIDs
-          creatorID
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
       createdAt
       updatedAt
     }
@@ -130,9 +123,6 @@ export const listIngredients = /* GraphQL */ `
         name
         category
         scale
-        ingredientIDs {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -159,25 +149,31 @@ export const recipeByCreatorID = /* GraphQL */ `
         id
         time
         difficulty
-        ingredientIDs
         creatorID
         createdAt
+        ingredientIDs
+        ingredients {
+          nextToken
+        }
+        steps {
+          nextToken
+        }
         updatedAt
       }
       nextToken
     }
   }
 `;
-export const stepByRecipeID = /* GraphQL */ `
-  query StepByRecipeID(
-    $recipeID: ID
+export const recipeByIngredientIDs = /* GraphQL */ `
+  query RecipeByIngredientIDs(
+    $ingredientIDs: ID
     $sortDirection: ModelSortDirection
-    $filter: ModelPrepStepFilterInput
+    $filter: ModelRecipeFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    stepByRecipeID(
-      recipeID: $recipeID
+    recipeByIngredientIDs(
+      ingredientIDs: $ingredientIDs
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -185,15 +181,17 @@ export const stepByRecipeID = /* GraphQL */ `
     ) {
       items {
         id
-        entryNumber
-        description
         time
-        recipeID
+        difficulty
+        creatorID
+        createdAt
         ingredientIDs
+        ingredients {
+          nextToken
+        }
         steps {
           nextToken
         }
-        createdAt
         updatedAt
       }
       nextToken
@@ -220,9 +218,6 @@ export const ingredientByCategory = /* GraphQL */ `
         name
         category
         scale
-        ingredientIDs {
-          nextToken
-        }
         createdAt
         updatedAt
       }
