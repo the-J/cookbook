@@ -73,5 +73,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "cookbookdev": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

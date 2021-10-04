@@ -2,9 +2,13 @@ import React from "react";
 import "./Loader.styles.scss";
 
 const Loader = () => (
-  <div className="is-active loader-wrapper">
-    <div className="loader is-loading" />
-  </div>
+  <span
+    className="block bulma-loader-mixin"
+    style={{
+      height: "300px",
+      width: "500px",
+    }}
+  />
 );
 
 export default Loader;

@@ -1,9 +1,7 @@
 import React from "react";
 import "App.styles.scss";
-import { HomeView } from "views";
+import AppRouter from "router";
 
-const App = () => {
-  return <HomeView />;
-};
+const App = () => <AppRouter />;
 
 export default App;

@@ -24,27 +24,33 @@ const Navbar = () => {
         <span aria-hidden="true" />
       </a>
 
-      <div
-        id="navbarBasicExample"
-        className={openState ? "navbar-menu is-active" : "navbar-menu "}
-      >
-        <div className="navbar-start">
-          <a className="navbar-item">Settings</a>
-          <hr className="navbar-divider" />
-          <a className="navbar-item">Log out</a>
-        </div>
+      {/*<div*/}
+      {/*  id="navbarBasicExample"*/}
+      {/*  className={openState ? "navbar-menu is-active" : "navbar-menu "}*/}
+      {/*>*/}
+      {/*  <div className="navbar-start">*/}
+      {/*    <a className="navbar-item">Settings</a>*/}
+      {/*    <hr className="navbar-divider" />*/}
+      {/*    <a className="navbar-item">Log out</a>*/}
+      {/*  </div>*/}
 
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
-            </div>
-          </div>
-        </div>
-      </div>
+      {/*  <div className="navbar-end">*/}
+      {/*    <div className="navbar-item">*/}
+      {/*      <div className="buttons">*/}
+      {/*        <a className="button is-primary">*/}
+      {/*          <strong>Sign up</strong>*/}
+      {/*        </a>*/}
+      {/*        <a className="button is-light">Log in</a>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+
+      {/*<div>*/}
+      {/*  <button className="button">button</button>*/}
+      {/*  <button className="button">button</button>*/}
+      {/*  <button className="button">button</button>*/}
+      {/*</div>*/}
     </nav>
   );
 };
