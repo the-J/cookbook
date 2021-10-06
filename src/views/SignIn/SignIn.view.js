@@ -16,14 +16,18 @@ const SignInView = () => {
     delayError: 1500,
   });
 
-  const onSubmit = (values) => console.log({ values });
+  const onSubmit = (values) => {
+    console.log({ values });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         name="name"
         placeholder="Name"
-        className={`form-control ${errors.name ? "is-invalid" : ""}`}
+        className={`block input form-control ${
+          errors.name ? "is-invalid" : ""
+        }`}
         {...register("name", {
           required: "Name is required",
           pattern: {
@@ -37,7 +41,9 @@ const SignInView = () => {
       <input
         name="email"
         placeholder="Enter email"
-        className={`form-control ${errors.email ? "is-invalid" : ""}`}
+        className={`block input form-control ${
+          errors.email ? "is-invalid" : ""
+        }`}
         {...register("email", {
           required: "Email is required",
           pattern: {
@@ -47,6 +53,9 @@ const SignInView = () => {
         })}
       />
       <p>{errors.email?.message}</p>
+      <button className="block button is-primary" type="submit">
+        Sign in{" "}
+      </button>
     </form>
   );
 };
