@@ -43,11 +43,11 @@ export type CognitoUserAttributes = {
   "custom:isAdmin"?: boolean;
 };
 
-function useAuth() {
+function useAuthContext() {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error("useAuthContext must be used within an AuthProvider");
   }
   const [state, dispatch] = context;
 
@@ -104,6 +104,7 @@ function useAuth() {
       } else if (JSON.stringify(e).toLowerCase().includes("no current user")) {
         dispatch({ type: "LOGIN_FAILURE", error: undefined });
       } else {
+        // @ts-ignore
         dispatch({ type: "LOGIN_FAILURE", error: new Error(e) });
       }
 
@@ -134,4 +135,4 @@ function useAuth() {
   };
 }
 
-export { AuthProvider, useAuth };
+export { AuthProvider, useAuthContext };
