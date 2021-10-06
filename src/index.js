@@ -6,13 +6,13 @@ import reportWebVitals from "./reportWebVitals";
 
 import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
-import AppRouter from "router";
+import App from "./App";
 
 Amplify.configure(awsconfig);
 
 ReactDOM.render(
   <React.StrictMode>
-    <AppRouter />
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
