@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Link, Route } from "react-router-dom";
-import { SignInView, SignUpView } from "views";
+import { TempView, SignInView, SignUpView } from "views";
 
 const AppRouter = () => {
   return (
@@ -27,9 +27,13 @@ const AppRouter = () => {
           you have multiple routes, but you want only one
           of them to render at a time
         */}
-        {/*<Switch>*/}
         <Route exact path="/">
-          <div>Home</div>
+          <div>
+            <TempView />
+          </div>
+        </Route>
+        <Route path="/dashboard">
+          <div>Dashboard</div>
         </Route>
         <Route path="/sign-in">
           <SignInView />
@@ -37,10 +41,6 @@ const AppRouter = () => {
         <Route path="/sign-up">
           <SignUpView />
         </Route>
-        <Route path="/dashboard">
-          <div>Dashboard</div>
-        </Route>
-        {/*</Switch>*/}
       </div>
     </Router>
   );
