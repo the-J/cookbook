@@ -12,17 +12,13 @@ const SignUpView = () => {
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: {
-      name: "Name",
-      email: "Email",
-    },
     criteriaMode: "all",
     delayError: 1500,
   });
 
   const onSubmit = (values) => {
     console.log({ values });
-    signUp("Marco", "polo@marco.com");
+    signUp("Marco", "polo@marco.com", "password");
   };
 
   return (
@@ -57,7 +53,20 @@ const SignUpView = () => {
           },
         })}
       />
-      <p>{errors.email?.message}</p>
+      <input
+        name="password"
+        placeholder="Password"
+        className={`block input form-control ${
+          errors.password ? "is-invalid" : ""
+        }`}
+        {...register("password", {
+          required: "Password is required",
+          pattern: {
+            message: "Invalid email address format",
+          },
+        })}
+      />
+      <p>{errors.password?.message}</p>
       <button className="block button is-primary" type="submit">
         Sign in{" "}
       </button>

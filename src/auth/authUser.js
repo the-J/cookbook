@@ -8,15 +8,14 @@ export const authUser = async () => {
   }
 };
 
-export const signUp = async (username, password) => {
-  console.log(username, password);
+export const signUp = async (username, email, password) => {
+  console.log(username, email, password);
   try {
     const { user } = await Auth.signUp({
       username,
       password,
       attributes: {
-        email: "email@email.com", // optional
-        phone_number: "123123123", // optional - E.164 number convention
+        email, // optional
         // other custom attributes
         "custom:favorite_flavor": "Cookie Dough", // custom attribute, not standard
       },

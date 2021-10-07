@@ -31,15 +31,9 @@ const AuthProvider: React.FC = (props) => {
 };
 
 export type CognitoUserAttributes = {
+  name: string;
   email: string;
-  family_name: string;
-  given_name: string;
   picture?: string;
-  "custom:bio"?: string;
-  phone_number?: string;
-  "custom:country"?: string;
-  "custom:city"?: string;
-  address?: string;
   "custom:isAdmin"?: boolean;
 };
 
@@ -86,15 +80,9 @@ function useAuthContext() {
         type: "LOGIN_SUCCESS",
         userConfig: cognitoUser,
         user: {
+          name: attributes.name,
           email: attributes.email,
-          familyName: attributes.family_name,
-          givenName: attributes.given_name,
-          bio: attributes["custom:bio"],
           picture: attributes.picture,
-          phoneNumber: attributes.phone_number,
-          country: attributes["custom:country"],
-          city: attributes["custom:city"],
-          address: attributes.address,
           isAdmin: attributes["custom:isAdmin"],
         },
       });
