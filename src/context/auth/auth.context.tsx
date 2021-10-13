@@ -9,7 +9,10 @@ import React, {
 import Auth, { CognitoUser } from "@aws-amplify/auth";
 import type { UpdatableUserAttributes } from "./auth.reducer";
 import { authReducer, AuthReducerAction, AuthState } from "./auth.reducer";
-import { IDENTITY_LOCALSTORAGE_KEY, JWT_LOCALSTORAGE_KEY } from "../constants";
+import {
+  IDENTITY_LOCALSTORAGE_KEY,
+  JWT_LOCALSTORAGE_KEY,
+} from "../../constants";
 
 type AuthContextValue = [AuthState, React.Dispatch<AuthReducerAction>];
 
@@ -69,18 +72,22 @@ function useAuthContext() {
   }, []);
 
   const initializeUser = useCallback(async () => {
+    console.log("initialize user");
     try {
       const cognitoUser = await getCurrentUser();
       setTokenInLocalStorage(cognitoUser);
+      console.log({ cognitoUser });
 
       await setIdentityIdInLocalStorage();
 
       const { attributes } = cognitoUser;
       dispatch({
+        error: undefined,
+        updatedUserAttributes: undefined,
         type: "LOGIN_SUCCESS",
         userConfig: cognitoUser,
         user: {
-          username: attributes.name,
+          name: attributes.name,
           email: attributes.email,
           picture: attributes.picture,
           isAdmin: attributes["custom:isAdmin"],
