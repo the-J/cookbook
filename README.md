@@ -19,3 +19,10 @@ amplify init
 ```
 
 and roll with it. 
+
+
+### Local dev.
+
+#### API
+run `amplify mock api` and open browser `http://localhost:20002`. 
+
