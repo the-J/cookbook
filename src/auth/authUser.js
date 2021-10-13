@@ -8,19 +8,20 @@ export const authUser = async () => {
   }
 };
 
-export const signUp = async (username, email, password) => {
-  console.log(username, email, password);
+export const signUp = async (name, email, password) => {
   try {
     const { user } = await Auth.signUp({
-      username,
+      username: email,
       password,
       attributes: {
         email, // optional
         // other custom attributes
-        "custom:favorite_flavor": "Cookie Dough", // custom attribute, not standard
+        name,
       },
     });
     console.log(user);
+
+    return user;
   } catch (error) {
     console.log("error signing up:", error);
   }
