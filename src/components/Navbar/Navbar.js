@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [openState, setOpenState] = useState(false);
@@ -33,19 +34,24 @@ const Navbar = () => {
 
       <div className={`navbar-menu ${openState && "is-active"}`}>
         <div className="navbar-start">
-          <a className="navbar-item">Home</a>
+          <Link to="/sign-up" className="navbar-item">
+            Sign up
+          </Link>
+          <Link to="/sign-in" className="navbar-item">
+            Sign in
+          </Link>
         </div>
 
-        <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              <a className="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a className="button is-light">Log in</a>
-            </div>
-          </div>
-        </div>
+        {/*<div className="navbar-end">*/}
+        {/*  <div className="navbar-item">*/}
+        {/*    <div className="buttons">*/}
+        {/*      <a className="button is-primary">*/}
+        {/*        <strong>Sign up</strong>*/}
+        {/*      </a>*/}
+        {/*      <a className="button is-light">Log in</a>*/}
+        {/*    </div>*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </div>
     </nav>
   );
