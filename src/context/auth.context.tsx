@@ -80,7 +80,7 @@ function useAuthContext() {
         type: "LOGIN_SUCCESS",
         userConfig: cognitoUser,
         user: {
-          name: attributes.name,
+          username: attributes.name,
           email: attributes.email,
           picture: attributes.picture,
           isAdmin: attributes["custom:isAdmin"],
