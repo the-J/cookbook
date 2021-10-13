@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { Layout } from "layouts";
-import { useAuthContext } from "context/auth.context";
+import { useAuthContext } from "../../context/auth/auth.context";
 import { LayoutMain } from "../../layouts";
 
 const HomeView = () => {
