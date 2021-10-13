@@ -2,16 +2,34 @@ import React, { useEffect, useRef, useState } from "react";
 
 import { useAuthContext } from "../../context/auth.context";
 import { signUp } from "../../auth/authUser";
+import { useHistory, useLocation } from "react-router-dom";
+import { LayoutMain } from "../../layouts";
 
 const SignUpView = () => {
-  const { initializeUser, updateUserAttributes } = useAuthContext();
-  console.log({ updateUserAttributes });
+  const { initializeUser, updateUserAttributes, state } = useAuthContext();
+  console.log({ state });
   const [validationErrors, setValidationError] = useState({
     name: "",
     email: "",
     password: "",
   });
-  const [isValid, setIsValid] = useState(false);
+  const [fieldValues, setFieldValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+  const [isValid, setIsValid] = useState(true);
+
+  // let history = useHistory();
+  // let location = useLocation();
+  // let auth = useAuthContext();
+  //
+  // let { from } = location.state || { from: { pathname: "/" } };
+  // let login = () => {
+  // auth.signin(() => {
+  //   history.replace(from);
+  // });
+  // };
 
   const checkIsValid = () => {
     const isValid = Object.values(validationErrors).some((x) => !x);
@@ -22,9 +40,12 @@ const SignUpView = () => {
     checkIsValid();
   }, [validationErrors]);
 
-  const onSubmit = (values) => {
-    console.log(values);
-    // const user = signUp(values.Name, values.Email, values.Password);
+  const onSubmit = (e) => {
+    console.log("onsubmit");
+    e.preventDefault();
+    signUp(fieldValues.name, fieldValues.email, fieldValues.password).then(() =>
+      initializeUser()
+    );
   };
 
   // validation:
@@ -64,52 +85,41 @@ const SignUpView = () => {
     }
   };
   return (
-    <>
+    <LayoutMain>
       <div className="columns">
         <div className="column" />
         <div className="column">
-          <form onSubmit={() => onSubmit()} className="mx-4">
+          <form onSubmit={onSubmit} className="mx-4">
             <input
               required
               placeholder="Name"
               name="name"
               type="text"
-              onChange={(e) => validateValue(e)}
+              onChange={(e) =>
+                setFieldValues((prevState) => ({
+                  ...prevState,
+                  name: e.target.value,
+                }))
+              }
               minLength={5}
               maxLength={25}
-              className={`block input form-control ${
+              className={`block input ${
                 validationErrors.name ? "is-invalid" : ""
               }`}
             />
             {validationErrors.name && <p>{validationErrors.name}</p>}
-
-            <div className="field">
-              <label className="label">Username</label>
-              <div className="control has-icons-left has-icons-right">
-                <input
-                  className="input is-success"
-                  style={{
-                    fontSize: ".5rem",
-                  }}
-                  type="text"
-                  placeholder="Text input"
-                  value="bulma"
-                />
-                <span className="icon is-small is-left">
-                  <i className="fas fa-user" />
-                </span>
-                <span className="icon is-small is-right">
-                  <i className="fas fa-check" />
-                </span>
-              </div>
-            </div>
 
             <input
               required
               placeholder="Email"
               type="email"
               name="email"
-              onChange={(e) => validateValue(e)}
+              onChange={(e) =>
+                setFieldValues((prevState) => ({
+                  ...prevState,
+                  email: e.target.value,
+                }))
+              }
               className={`block input form-control ${
                 validationErrors.email ? "is-invalid" : ""
               }`}
@@ -121,7 +131,12 @@ const SignUpView = () => {
               placeholder="Password"
               type="password"
               name="password"
-              onChange={(e) => validateValue(e)}
+              onChange={(e) =>
+                setFieldValues((prevState) => ({
+                  ...prevState,
+                  password: e.target.value,
+                }))
+              }
               className={`block input form-control ${
                 validationErrors.password ? "is-invalid" : ""
               }`}
@@ -130,7 +145,7 @@ const SignUpView = () => {
             <button
               className="block button is-primary"
               type="submit"
-              disabled={isValid}
+              // disabled={isValid}
             >
               Sign up
             </button>
@@ -144,7 +159,7 @@ const SignUpView = () => {
         </div>
         <div className="column" />
       </div>
-    </>
+    </LayoutMain>
   );
 };
 
