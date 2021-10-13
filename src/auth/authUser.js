@@ -19,11 +19,10 @@ export const signUp = async (name, email, password) => {
         name,
       },
     });
-    console.log(user);
 
     return user;
   } catch (error) {
-    console.log("error signing up:", error);
+    throw error.message;
   }
 };
 
