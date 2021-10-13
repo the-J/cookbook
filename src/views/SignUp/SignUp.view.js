@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { useAuthContext } from "../../context/auth.context";
+import { useAuthContext } from "../../context/auth/auth.context";
+import { useError } from "../../context/error.context";
 import { signUp } from "../../auth/authUser";
-import { useHistory, useLocation } from "react-router-dom";
 import { LayoutMain } from "../../layouts";
 
 const SignUpView = () => {
   const { initializeUser, updateUserAttributes, state } = useAuthContext();
-  console.log({ state });
+  const { addError } = useError();
   const [validationErrors, setValidationError] = useState({
     name: "",
     email: "",
@@ -40,12 +40,15 @@ const SignUpView = () => {
     checkIsValid();
   }, [validationErrors]);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     console.log("onsubmit");
     e.preventDefault();
-    signUp(fieldValues.name, fieldValues.email, fieldValues.password).then(() =>
-      initializeUser()
-    );
+    await signUp(fieldValues.name, fieldValues.email, fieldValues.password)
+      .then(() => initializeUser())
+      .catch((err) => {
+        console.log("callback", { err });
+        addError(err, "again");
+      });
   };
 
   // validation:
