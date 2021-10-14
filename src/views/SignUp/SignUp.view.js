@@ -4,8 +4,10 @@ import { useAuthContext } from "../../context/auth/auth.context";
 import { useError } from "../../context/error.context";
 import { signUp } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
+import { Redirect, useHistory } from "react-router-dom";
 
 const SignUpView = () => {
+  let history = useHistory();
   const { initializeUser, updateUserAttributes, state } = useAuthContext();
   const { addError } = useError();
   const [validationErrors, setValidationError] = useState({
@@ -40,15 +42,12 @@ const SignUpView = () => {
     checkIsValid();
   }, [validationErrors]);
 
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     console.log("onsubmit");
     e.preventDefault();
-    await signUp(fieldValues.name, fieldValues.email, fieldValues.password)
-      .then(() => initializeUser())
-      .catch((err) => {
-        console.log("callback", { err });
-        addError(err, "again");
-      });
+    signUp(fieldValues.name, fieldValues.email, fieldValues.password)
+      .then(() => history.push("/sign-in"))
+      .catch((err) => addError(err, "again"));
   };
 
   // validation:
