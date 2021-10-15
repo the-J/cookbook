@@ -37,7 +37,7 @@ export type AuthReducerAction =
       updatedUserAttributes: UpdatableUserAttributes;
     };
 
-const initialState = {
+export const initialState = {
   isLoading: true,
   error: undefined,
   isAuthenticated: false,
