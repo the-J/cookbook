@@ -1,10 +1,29 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useHistory } from "react-router-dom";
+
+import { useAuthContext } from "../../context/auth/auth.context";
+import { useError } from "../../context/error.context";
+import { signOut } from "../../auth/authUser";
 
 const Navbar = () => {
-  const [openState, setOpenState] = useState(false);
-  const handleChangeState = () => {
-    setOpenState(!openState);
+  const history = useHistory();
+  const { addError } = useError();
+  const {
+    state: { isAuthenticated, user },
+    initializeUser,
+  } = useAuthContext();
+  const [dropdownState, setDropdownState] = useState(false);
+
+  const changeDropdownState = () => setDropdownState(!dropdownState);
+
+  const handleSignOut = () => {
+    signOut()
+      .then(async () => {
+        await initializeUser();
+        changeDropdownState();
+        history.push("/log-in");
+      })
+      .catch((err) => addError(err, "AWS err"));
   };
 
   return (
@@ -20,11 +39,11 @@ const Navbar = () => {
 
         <a
           role="button"
-          className={`navbar-burger ${openState && "is-active"}`}
+          className={`navbar-burger ${dropdownState && "is-active"}`}
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
-          onClick={handleChangeState}
+          onClick={changeDropdownState}
         >
           <span aria-hidden="true" />
           <span aria-hidden="true" />
@@ -32,8 +51,8 @@ const Navbar = () => {
         </a>
       </div>
 
-      <div className={`navbar-menu ${openState && "is-active"}`}>
-        <div className="navbar-start">
+      <div className={`navbar-menu ${dropdownState && "is-active"}`}>
+        <div className="navbar-start" onClick={changeDropdownState}>
           <Link to="/sign-up" className="navbar-item">
             Sign up
           </Link>
@@ -42,16 +61,17 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/*<div className="navbar-end">*/}
-        {/*  <div className="navbar-item">*/}
-        {/*    <div className="buttons">*/}
-        {/*      <a className="button is-primary">*/}
-        {/*        <strong>Sign up</strong>*/}
-        {/*      </a>*/}
-        {/*      <a className="button is-light">Log in</a>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        {isAuthenticated && (
+          <div className="navbar-end">
+            <div className="navbar-item">
+              <div className="buttons">
+                <button className="button is-primary" onClick={handleSignOut}>
+                  <strong>Log out</strong>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
