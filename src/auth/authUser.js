@@ -4,7 +4,7 @@ export const authUser = async () => {
   try {
     return await Auth.currentSession().isValid();
   } catch (error) {
-    return false;
+    return error.message;
   }
 };
 
