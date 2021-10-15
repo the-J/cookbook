@@ -76,14 +76,10 @@ function useAuthContext() {
     try {
       const cognitoUser = await getCurrentUser();
       setTokenInLocalStorage(cognitoUser);
-      console.log({ cognitoUser });
-
       await setIdentityIdInLocalStorage();
-
       const { attributes } = cognitoUser;
+
       dispatch({
-        error: undefined,
-        updatedUserAttributes: undefined,
         type: "LOGIN_SUCCESS",
         userConfig: cognitoUser,
         user: {
