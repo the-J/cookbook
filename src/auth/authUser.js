@@ -52,10 +52,11 @@ const resendConfirmationCode = async (username) => {
   }
 };
 
-const signOut = async () => {
+export const signOut = async () => {
   try {
     await Auth.signOut();
   } catch (error) {
     console.log("error signing out: ", error);
+    throw Error(error.message);
   }
 };
