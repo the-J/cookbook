@@ -10,17 +10,25 @@ const Notification = ({ children }) => {
     if (error?.message) {
       toast(error.message);
     }
-    console.log("notification", error?.message);
 
     return () => {
       removeError();
     };
-  }, [error?.message]);
+  }, [error, removeError]);
 
   return (
     <>
       {children}
-      <ToastContainer />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3500}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        pauseOnHover
+      />
     </>
   );
 };
