@@ -7,7 +7,7 @@ import React, {
   useReducer,
 } from "react";
 import Auth, { CognitoUser } from "@aws-amplify/auth";
-import type { UpdatableUserAttributes } from "./auth.reducer";
+import type { UpdatableUserAttributes, User } from "./auth.reducer";
 import {
   authReducer,
   AuthReducerAction,
@@ -17,6 +17,7 @@ import {
 import {
   IDENTITY_LOCALSTORAGE_KEY,
   JWT_LOCALSTORAGE_KEY,
+  USER_LOCALSTORAGE_KEY,
 } from "../../constants";
 
 type AuthContextValue = [AuthState, React.Dispatch<AuthReducerAction>];
@@ -58,15 +59,22 @@ function useAuthContext() {
     );
   }, []);
 
-  const deleteIdentityIdInLocalStorage = () =>
-    localStorage.removeItem(IDENTITY_LOCALSTORAGE_KEY);
+  const setUserInLocalStorage = (user: User) =>
+    localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify({ user: user }));
 
-  const deleteTokenInLocalStorage = () =>
+  const getUserFromLocalStorage = () => {
+    const user = localStorage.getItem(USER_LOCALSTORAGE_KEY) || "null";
+    return JSON.parse(user);
+  };
+
+  const deleteLocalStorageData = () => {
+    localStorage.removeItem(IDENTITY_LOCALSTORAGE_KEY);
     localStorage.removeItem(JWT_LOCALSTORAGE_KEY);
+    localStorage.removeItem(USER_LOCALSTORAGE_KEY);
+  }
 
   const logOutUser = () => {
-    deleteIdentityIdInLocalStorage();
-    deleteTokenInLocalStorage();
+    deleteLocalStorageData();
     dispatch({ type: "LOGOUT_SUCCESS" });
   };
 
@@ -85,6 +93,10 @@ function useAuthContext() {
     try {
       const cognitoUser = await getCurrentUser();
       setTokenInLocalStorage(cognitoUser);
+      setUserInLocalStorage({
+        email: cognitoUser.attributes.email,
+        name: cognitoUser.attributes.name,
+      });
       await setIdentityIdInLocalStorage();
       const { attributes } = cognitoUser;
 
