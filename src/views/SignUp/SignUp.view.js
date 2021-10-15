@@ -46,7 +46,7 @@ const SignUpView = () => {
     console.log("onsubmit");
     e.preventDefault();
     signUp(fieldValues.name, fieldValues.email, fieldValues.password)
-      .then(() => history.push("/sign-in"))
+      .then(() => history.push("/log-in"))
       .catch((err) => addError(err, "again"));
   };
 

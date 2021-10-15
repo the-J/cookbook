@@ -2,7 +2,7 @@ import React from "react";
 
 import { useForm } from "react-hook-form";
 
-const SignInView = () => {
+const LogInView = () => {
   const {
     register,
     formState: { errors },
@@ -60,4 +60,4 @@ const SignInView = () => {
   );
 };
 
-export default SignInView;
+export default LogInView;
