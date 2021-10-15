@@ -10,7 +10,7 @@ const Navbar = () => {
   const { addError } = useError();
   const {
     state: { isAuthenticated, user },
-    initializeUser,
+    logOutUser,
   } = useAuthContext();
   const [dropdownState, setDropdownState] = useState(false);
 
@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleSignOut = () => {
     signOut()
       .then(async () => {
-        await initializeUser();
+        logOutUser();
         changeDropdownState();
         history.push("/log-in");
       })
