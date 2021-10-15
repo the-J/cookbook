@@ -18,6 +18,7 @@
 
 export const JWT_LOCALSTORAGE_KEY = "cognito_id_token";
 export const IDENTITY_LOCALSTORAGE_KEY = "cognito_identity_id";
+export const USER_LOCALSTORAGE_KEY = "user";
 
 export enum ROUTE_PATHS {
   LOGIN = "/auth/login",
