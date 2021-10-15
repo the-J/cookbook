@@ -34,11 +34,12 @@ const confirmSignUp = async (username, code) => {
   }
 };
 
-const signIn = async (username, password) => {
+export const logIn = async (username, password) => {
   try {
-    const user = await Auth.signIn(username, password);
+    return Auth.signIn(username, password);
   } catch (error) {
     console.log("error signing in", error);
+    throw error.message;
   }
 };
 
