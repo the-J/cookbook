@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { useAuthContext } from "../../context/auth/auth.context";
 import { useError } from "../../context/error.context";
 import { signUp } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const SignUpView = () => {
   let history = useHistory();
-  const { initializeUser, updateUserAttributes, state } = useAuthContext();
   const { addError } = useError();
   const [validationErrors, setValidationError] = useState({
     name: "",
@@ -28,9 +26,7 @@ const SignUpView = () => {
   //
   // let { from } = location.state || { from: { pathname: "/" } };
   // let login = () => {
-  // auth.signin(() => {
   //   history.replace(from);
-  // });
   // };
 
   const checkIsValid = () => {
@@ -47,7 +43,7 @@ const SignUpView = () => {
     e.preventDefault();
     signUp(fieldValues.name, fieldValues.email, fieldValues.password)
       .then(() => history.push("/log-in"))
-      .catch((err) => addError(err, "again"));
+      .catch((err) => addError(err, "AWS err"));
   };
 
   // validation:
