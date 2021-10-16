@@ -21,7 +21,7 @@ const LogInView = () => {
   const [fieldValues, setFieldValues] = useState(initState);
 
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state || { from: { pathname: "/recipes" } };
 
   const checkIsValid = () => {
     const isValid = Object.values(validationErrors).some((x) => !x);

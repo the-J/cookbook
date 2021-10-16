@@ -36,7 +36,9 @@ const confirmSignUp = async (username, code) => {
 
 export const logIn = async (username, password) => {
   try {
-    return Auth.signIn(username, password);
+    const user = await Auth.signIn(username, password);
+    console.log({ user });
+    return user;
   } catch (error) {
     console.log("error signing in", error);
     throw error.message;

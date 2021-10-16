@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
 import { useError } from "../../context/error.context";
@@ -8,6 +8,7 @@ import { signOut } from "../../auth/authUser";
 const Navbar = () => {
   const history = useHistory();
   const { addError } = useError();
+  const { location } = useLocation();
   const {
     state: { isAuthenticated, user },
     logOutUser,
@@ -58,6 +59,12 @@ const Navbar = () => {
           </Link>
           <Link to="/log-in" className="navbar-item">
             Log in
+          </Link>
+          <Link to="/" className="navbar-item">
+            Home
+          </Link>
+          <Link to="/recipes" className="navbar-item">
+            Recipes
           </Link>
         </div>
 

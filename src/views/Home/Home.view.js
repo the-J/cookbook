@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { API, graphqlOperation } from "aws-amplify";
+import React from "react";
 import { Layout } from "layouts";
 import { useAuthContext } from "../../context/auth/auth.context";
 import { LayoutMain } from "../../layouts";
-
 const HomeView = () => {
   // const [blogName, setBlogName] = useState("");
   // const [blogsList, setBlogsList] = useState([]);
