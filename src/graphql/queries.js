@@ -130,6 +130,37 @@ export const listIngredients = /* GraphQL */ `
     }
   }
 `;
+export const getStock = /* GraphQL */ `
+  query GetStock($id: ID!) {
+    getStock(id: $id) {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listStocks = /* GraphQL */ `
+  query ListStocks(
+    $filter: ModelStockFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listStocks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        count
+        creatorID
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const recipeByCreatorID = /* GraphQL */ `
   query RecipeByCreatorID(
     $creatorID: ID
@@ -218,6 +249,33 @@ export const ingredientByCategory = /* GraphQL */ `
         name
         category
         scale
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const stockByCreatorID = /* GraphQL */ `
+  query StockByCreatorID(
+    $creatorID: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelStockFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    stockByCreatorID(
+      creatorID: $creatorID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        count
+        creatorID
         createdAt
         updatedAt
       }

@@ -148,3 +148,39 @@ export const onDeleteIngredient = /* GraphQL */ `
     }
   }
 `;
+export const onCreateStock = /* GraphQL */ `
+  subscription OnCreateStock {
+    onCreateStock {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateStock = /* GraphQL */ `
+  subscription OnUpdateStock {
+    onUpdateStock {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteStock = /* GraphQL */ `
+  subscription OnDeleteStock {
+    onDeleteStock {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;

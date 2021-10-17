@@ -55,3 +55,15 @@ enum INGREDIENTCATEGORY {
     PRZYPRAWA
     MIESO
 }
+
+type Stock
+@model
+@key(name: "byCreatorID", fields: ["creatorID"], queryField: "stockByCreatorID")
+{
+    id: ID!
+    name: String!
+    count: Int!
+    creatorID: ID!
+    createdAt: String!
+    description: String!
+}

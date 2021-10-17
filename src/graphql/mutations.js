@@ -217,3 +217,48 @@ export const deleteIngredient = /* GraphQL */ `
     }
   }
 `;
+export const createStock = /* GraphQL */ `
+  mutation CreateStock(
+    $input: CreateStockInput!
+    $condition: ModelStockConditionInput
+  ) {
+    createStock(input: $input, condition: $condition) {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateStock = /* GraphQL */ `
+  mutation UpdateStock(
+    $input: UpdateStockInput!
+    $condition: ModelStockConditionInput
+  ) {
+    updateStock(input: $input, condition: $condition) {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteStock = /* GraphQL */ `
+  mutation DeleteStock(
+    $input: DeleteStockInput!
+    $condition: ModelStockConditionInput
+  ) {
+    deleteStock(input: $input, condition: $condition) {
+      id
+      name
+      count
+      creatorID
+      createdAt
+      updatedAt
+    }
+  }
+`;
