@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
-import { HomeView, LogInView, RecipesView, SignUpView } from "views";
+import {
+  PantryView,
+  HomeView,
+  LogInView,
+  RecipesView,
+  SignUpView,
+} from "views";
 import { useAuthContext } from "./context/auth/auth.context";
 
 const PrivateRoute = ({ children, path }) => {
@@ -25,7 +31,6 @@ const PrivateRoute = ({ children, path }) => {
     }
   }, [state.user]);
 
-  console.log("rerender", { user });
   return ifUser ? (
     <Route path={path} exact>
       {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
@@ -38,6 +43,9 @@ const AppRouter = () => {
     <Router>
       <PrivateRoute path="/">
         <HomeView />
+      </PrivateRoute>
+      <PrivateRoute path="/pantry">
+        <PantryView />
       </PrivateRoute>
       <PrivateRoute path="/recipes">
         <RecipesView />
