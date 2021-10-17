@@ -3,17 +3,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { LayoutMain } from "../../layouts";
-import { Card, Modal } from "../../components";
+import { AddStock, Card, Modal } from "../../components";
 
 const PantryView = () => {
   const [openModalState, setOpenModalState] = useState(false);
   return (
     <>
       <Modal
-        title="new modal"
+        title="Add New Stock"
         openState={openModalState}
         closeModal={() => setOpenModalState(false)}
         saveChanges={() => {}}
+        content={<AddStock />}
       />
       <LayoutMain>
         <div
