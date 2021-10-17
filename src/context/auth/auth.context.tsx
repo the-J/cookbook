@@ -62,16 +62,11 @@ function useAuthContext() {
   const setUserInLocalStorage = (user: User) =>
     localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify({ user: user }));
 
-  const getUserFromLocalStorage = () => {
-    const user = localStorage.getItem(USER_LOCALSTORAGE_KEY) || "null";
-    return JSON.parse(user);
-  };
-
   const deleteLocalStorageData = () => {
     localStorage.removeItem(IDENTITY_LOCALSTORAGE_KEY);
     localStorage.removeItem(JWT_LOCALSTORAGE_KEY);
     localStorage.removeItem(USER_LOCALSTORAGE_KEY);
-  }
+  };
 
   const logOutUser = () => {
     deleteLocalStorageData();
@@ -111,13 +106,11 @@ function useAuthContext() {
         },
       });
     } catch (e) {
+      console.log({ e });
       if (e instanceof Error) {
         dispatch({ type: "LOGIN_FAILURE", error: e });
-      } else if (JSON.stringify(e).toLowerCase().includes("no current user")) {
-        dispatch({ type: "LOGIN_FAILURE", error: undefined });
       } else {
-        // @ts-ignore
-        dispatch({ type: "LOGIN_FAILURE", error: new Error(e) });
+        dispatch({ type: "LOGIN_FAILURE", error: undefined });
       }
 
       localStorage.removeItem(JWT_LOCALSTORAGE_KEY);

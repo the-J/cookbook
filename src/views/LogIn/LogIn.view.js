@@ -5,6 +5,7 @@ import { useAuthContext } from "../../context/auth/auth.context";
 import { useError } from "../../context/error.context";
 import { logIn } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
+import { useLogIn } from "../../hooks/useAuth";
 
 const initState = {
   email: "",
@@ -15,13 +16,11 @@ const LogInView = () => {
   const { initializeUser } = useAuthContext();
   let history = useHistory();
   const { addError } = useError();
+  // const user = useLogIn();
 
   const [isValid, setIsValid] = useState(true);
   const [validationErrors, setValidationError] = useState(initState);
   const [fieldValues, setFieldValues] = useState(initState);
-
-  let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/recipes" } };
 
   const checkIsValid = () => {
     const isValid = Object.values(validationErrors).some((x) => !x);
@@ -32,9 +31,20 @@ const LogInView = () => {
     checkIsValid();
   }, [validationErrors]);
 
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/recipes" } };
+
+  // useEffect(() => {
+  //   console.log("initial login", { user });
+  //   if (user) {
+  //     history.replace(from);
+  //   }
+  // }, [user]);
+
   const onSubmit = (e) => {
     console.log("onsubmit");
     e.preventDefault();
+
     logIn(fieldValues.email, fieldValues.password)
       .then(async () => {
         await initializeUser();

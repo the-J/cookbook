@@ -34,30 +34,28 @@ const RecipesView = () => {
   }, []);
 
   return (
-    <div>
-      Recipes
-      <p>{JSON.stringify(recipesListState)}</p>
-      <LayoutMain>
-        <div className="container block">
-          <div className="columns">
-            <div className="column is-6 is-offset-2">
-              <input
-                name="todo"
-                className="input is-warning is-large"
-                type="text"
-                value={"blogName"}
-                placeholder="Add TODO"
-              />
-            </div>
-            <div className="column is-2 is-flex is-justify-content-center">
-              <button type="submit" className="button is-large is-warning">
-                Add przepis
-              </button>
-            </div>
+    <LayoutMain>
+      <div className="container block">
+        <div className="columns">
+          <div className="column is-6 is-offset-2">
+            <input
+              name="todo"
+              className="input is-warning is-large"
+              type="text"
+              value={"blogName"}
+              placeholder="Add TODO"
+            />
+          </div>
+          <div className="column is-2 is-flex is-justify-content-center">
+            <button type="submit" className="button is-large is-warning">
+              Add przepis
+            </button>
           </div>
         </div>
-      </LayoutMain>
-    </div>
+      </div>
+      <h2>Recipes</h2>
+      <p>{JSON.stringify(recipesListState)}</p>
+    </LayoutMain>
   );
 };
 

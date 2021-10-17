@@ -1,16 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
 import { HomeView, LogInView, RecipesView, SignUpView } from "views";
 import { useAuthContext } from "./context/auth/auth.context";
 
 const PrivateRoute = ({ children, path }) => {
-  const { state } = useAuthContext();
+  const { state, initializeUser } = useAuthContext();
+  const [user, setUser] = useState(null);
+  const [ifUser, setIfUser] = useState(false);
 
-  return (
+  const getUser = async () => {
+    await initializeUser();
+  };
+
+  useEffect(() => {
+    if (!state.user) {
+      getUser();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (state.user) {
+      setUser(state.user);
+      setIfUser(true);
+    }
+  }, [state.user]);
+
+  console.log("rerender", { user });
+  return ifUser ? (
     <Route path={path} exact>
-      {state.user ? children : <Redirect to={{ pathname: "/log-in" }} />}
+      {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
     </Route>
-  );
+  ) : null;
 };
 
 const AppRouter = () => {
