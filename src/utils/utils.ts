@@ -12,6 +12,13 @@ export const isMinimumLength = (field: string, length: number): boolean => {
   return field.trim().length >= length;
 };
 
+export const trimToLength = (
+  value: string,
+  numberOfCharacters: number
+): string => {
+  return value.trim().slice(0, numberOfCharacters);
+};
+
 export function getUniqueTimestamp(): number {
   return Date.now() + Math.random();
 }
