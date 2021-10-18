@@ -14,3 +14,14 @@ export const recipesList = async () => {
     throw error.message;
   }
 };
+
+export const fetchAllStock = async () => {
+  try {
+    const data = await API.graphql({ query: queries.listStocks });
+    return data?.data?.listStocks?.items;
+  } catch (error) {
+    // @TODO handle this errors
+    console.log("fetchAllStock", { error }, error.errors[0].message);
+    throw error.message;
+  }
+};

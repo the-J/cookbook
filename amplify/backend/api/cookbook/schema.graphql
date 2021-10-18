@@ -62,7 +62,7 @@ type Stock
 {
     id: ID!
     name: String!
-    count: Int!
+    quantity: Int!
     creatorID: ID!
     createdAt: String!
     description: String!

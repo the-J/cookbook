@@ -135,9 +135,10 @@ export const getStock = /* GraphQL */ `
     getStock(id: $id) {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }
@@ -152,9 +153,10 @@ export const listStocks = /* GraphQL */ `
       items {
         id
         name
-        count
+        quantity
         creatorID
         createdAt
+        description
         updatedAt
       }
       nextToken
@@ -274,9 +276,10 @@ export const stockByCreatorID = /* GraphQL */ `
       items {
         id
         name
-        count
+        quantity
         creatorID
         createdAt
+        description
         updatedAt
       }
       nextToken

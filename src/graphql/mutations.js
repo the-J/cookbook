@@ -225,9 +225,10 @@ export const createStock = /* GraphQL */ `
     createStock(input: $input, condition: $condition) {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }
@@ -240,9 +241,10 @@ export const updateStock = /* GraphQL */ `
     updateStock(input: $input, condition: $condition) {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }
@@ -255,9 +257,10 @@ export const deleteStock = /* GraphQL */ `
     deleteStock(input: $input, condition: $condition) {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }

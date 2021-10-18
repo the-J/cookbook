@@ -1,0 +1,9 @@
+API.graphql(
+  graphqlOperation(onCreateNote,
+    {
+      owner: await Auth.currentAuthenticatedUser()
+    }
+  )
+).subscribe(...)
+https://github.com/aws-amplify/amplify-js/issues/4534
+

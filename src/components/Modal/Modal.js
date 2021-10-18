@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Modal = ({ title, openState, closeModal, saveChanges, content }) => (
+const Modal = ({ title, openState, closeModal, saveChanges, children }) => (
   <div className={`modal ${openState ? "is-active" : ""}`}>
     <div className="modal-background" />
     <div className="modal-card">
@@ -9,7 +9,7 @@ const Modal = ({ title, openState, closeModal, saveChanges, content }) => (
         <p className="modal-card-title">{title}</p>
         <button className="delete" aria-label="close" onClick={closeModal} />
       </header>
-      <section className="modal-card-body">{content}</section>
+      <section className="modal-card-body">{children}</section>
       <footer className="modal-card-foot">
         <button className="button is-success" onClick={saveChanges}>
           Add
@@ -27,7 +27,7 @@ Modal.propTypes = {
   openState: PropTypes.bool.isRequired,
   saveChanges: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
-  content: PropTypes.node.isRequired,
+  content: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
@@ -35,7 +35,7 @@ Modal.defaultProps = {
   openState: false,
   saveChanges: () => {},
   closeModal: () => {},
-  content: <p>CONTENT REQUIRED</p>,
+  content: () => <p>CONTENT REQUIRED</p>,
 };
 
 export default Modal;

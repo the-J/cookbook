@@ -153,9 +153,10 @@ export const onCreateStock = /* GraphQL */ `
     onCreateStock {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }
@@ -165,9 +166,10 @@ export const onUpdateStock = /* GraphQL */ `
     onUpdateStock {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }
@@ -177,9 +179,10 @@ export const onDeleteStock = /* GraphQL */ `
     onDeleteStock {
       id
       name
-      count
+      quantity
       creatorID
       createdAt
+      description
       updatedAt
     }
   }

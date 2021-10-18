@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { trimToLength } from "../../utils/utils";
 
-const Card = ({ name, subTitle, date, description }) => {
+const Card = ({ name, subTitle, date, description, quantity }) => {
   return (
     <div
       className="card m-1"
@@ -21,14 +21,14 @@ const Card = ({ name, subTitle, date, description }) => {
           <div className="media-content">
             <p className="title is-5">{trimToLength(name, 10)}</p>
             {subTitle && <p className="subtitle is-6">{subTitle}</p>}
+            {quantity && <p className="subtitle is-6">{quantity}</p>}
           </div>
         </div>
 
         {description && date && (
           <div className="content">
             <p>{description}</p>
-            <br />
-            <time dateTime="2016-1-1">{date}</time>
+            <time dateTime="2016-1-1">{date.split("T")[0]}</time>
           </div>
         )}
       </div>
