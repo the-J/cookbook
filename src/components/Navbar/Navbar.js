@@ -66,9 +66,9 @@ const Navbar = () => {
           <Link to="/pantry" className="navbar-item">
             Pantry
           </Link>
-          <Link to="/recipes" className="navbar-item">
-            Recipes
-          </Link>
+          {/*<Link to="/recipes" className="navbar-item">*/}
+          {/*  Recipes*/}
+          {/*</Link>*/}
         </div>
 
         {isAuthenticated && (

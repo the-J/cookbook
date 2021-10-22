@@ -1,51 +1,89 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { DataStore } from "@aws-amplify/datastore";
+import { nanoid } from "nanoid";
 
+import { Stock } from "../../models";
 import { LayoutMain } from "../../layouts";
 import { Card, Modal } from "../../components";
-import { fetchAllStock } from "../../db/queries";
-import { useError } from "../../context/error.context";
-import { createNewStock } from "../../db/mutations";
+import { useAuthContext } from "../../context/auth/auth.context";
+
+const initialState = {
+  name: "",
+  quantity: 0,
+};
+
+const dummyState = {
+  name: "test",
+  quantity: 10,
+  // readonly creatorID: string;
+  description: "test description",
+};
 
 const PantryView = () => {
-  const { addError } = useError();
+  const { state } = useAuthContext();
+  console.log({ state });
   const [openModalState, setOpenModalState] = useState(false);
   const [stock, setStock] = useState([]);
-
-  const fetchStock = async () => {
-    // @TODO handle this parts better
-    await fetchAllStock()
-      .then((data) => data && setStock(data))
-      .catch((err) => addError(err));
-  };
+  const [newStock, setNewStock] = useState(initialState);
 
   useEffect(() => {
+    console.log("fetchstock effect");
+
     fetchStock();
+    const subscription = DataStore.observe(Stock).subscribe(() => fetchStock());
+    return () => subscription.unsubscribe();
   }, []);
 
-  const [newStock, setNewStock] = useState({
-    name: "",
-    quantity: 0,
-  });
-
-  const handleChange = (e) => {
+  function onChange(e) {
+    console.log("inchange");
     e.preventDefault();
-    const value = e.target.value;
+    let value = e.target.value;
     const name = e.target.name;
 
+    if (name === "quantity") {
+      value = Number(value);
+    }
+
+    console.log(name, value, typeof value);
     setNewStock({
       ...newStock,
       [name]: value,
     });
-  };
+  }
 
-  const createStock = async () => {
-    await createNewStock(newStock)
-      .then((data) => console.log({ data }))
-      .catch((err) => console.log({ err }))
-      .finally(() => setOpenModalState(false));
-  };
+  async function fetchStock() {
+    console.log("fetchstock");
+
+    const stock = await DataStore.query(Stock);
+    setStock(stock);
+  }
+  async function createStock() {
+    console.log("createStock");
+
+    const createdStock = {
+      ...newStock,
+      id: nanoid(),
+      creatorID: state.userConfig.username,
+      createdAt: new Date().toISOString(),
+      description: "description",
+    };
+
+    console.log("asdasdasdasdasdasdasdasdasdasdasdawdasdawda", {
+      createdStock,
+    });
+
+    // @TODO createStock
+    try {
+      await DataStore.save(new Stock({ ...createdStock }));
+      setNewStock(initialState);
+
+      console.log("Stock saved successfully!");
+    } catch (error) {
+      console.log("Error saving stock", error);
+    }
+  }
 
   return (
     <>
@@ -64,7 +102,7 @@ const PantryView = () => {
           type="text"
           value={newStock.name}
           placeholder="Name"
-          onChange={(e) => handleChange(e)}
+          onChange={onChange}
         />
         <input
           name="quantity"
@@ -72,7 +110,7 @@ const PantryView = () => {
           type="number"
           value={newStock.quantity}
           placeholder="Quantity"
-          onChange={(e) => handleChange(e)}
+          onChange={onChange}
         />
       </Modal>
       <LayoutMain>

@@ -1,132 +1,33 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getRecipe = /* GraphQL */ `
-  query GetRecipe($id: ID!) {
-    getRecipe(id: $id) {
-      id
-      time
-      difficulty
-      creatorID
-      createdAt
-      ingredientIDs
-      ingredients {
-        items {
-          id
-          name
-          category
-          scale
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      steps {
-        items {
-          id
-          entryNumber
-          description
-          time
-          recipeID
-          ingredientIDs
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      updatedAt
-    }
-  }
-`;
-export const listRecipes = /* GraphQL */ `
-  query ListRecipes(
-    $filter: ModelRecipeFilterInput
+export const syncStocks = /* GraphQL */ `
+  query SyncStocks(
+    $filter: ModelStockFilterInput
     $limit: Int
     $nextToken: String
+    $lastSync: AWSTimestamp
   ) {
-    listRecipes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        time
-        difficulty
-        creatorID
-        createdAt
-        ingredientIDs
-        ingredients {
-          nextToken
-        }
-        steps {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getPrepStep = /* GraphQL */ `
-  query GetPrepStep($id: ID!) {
-    getPrepStep(id: $id) {
-      id
-      entryNumber
-      description
-      time
-      recipeID
-      ingredientIDs
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPrepSteps = /* GraphQL */ `
-  query ListPrepSteps(
-    $filter: ModelPrepStepFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPrepSteps(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        entryNumber
-        description
-        time
-        recipeID
-        ingredientIDs
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getIngredient = /* GraphQL */ `
-  query GetIngredient($id: ID!) {
-    getIngredient(id: $id) {
-      id
-      name
-      category
-      scale
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listIngredients = /* GraphQL */ `
-  query ListIngredients(
-    $filter: ModelIngredientFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listIngredients(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    syncStocks(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
       items {
         id
         name
-        category
-        scale
+        quantity
+        creatorID
         createdAt
+        description
+        _version
+        _deleted
+        _lastChangedAt
         updatedAt
       }
       nextToken
+      startedAt
     }
   }
 `;
@@ -139,6 +40,9 @@ export const getStock = /* GraphQL */ `
       creatorID
       createdAt
       description
+      _version
+      _deleted
+      _lastChangedAt
       updatedAt
     }
   }
@@ -157,104 +61,13 @@ export const listStocks = /* GraphQL */ `
         creatorID
         createdAt
         description
+        _version
+        _deleted
+        _lastChangedAt
         updatedAt
       }
       nextToken
-    }
-  }
-`;
-export const recipeByCreatorID = /* GraphQL */ `
-  query RecipeByCreatorID(
-    $creatorID: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelRecipeFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    recipeByCreatorID(
-      creatorID: $creatorID
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        time
-        difficulty
-        creatorID
-        createdAt
-        ingredientIDs
-        ingredients {
-          nextToken
-        }
-        steps {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const recipeByIngredientIDs = /* GraphQL */ `
-  query RecipeByIngredientIDs(
-    $ingredientIDs: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelRecipeFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    recipeByIngredientIDs(
-      ingredientIDs: $ingredientIDs
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        time
-        difficulty
-        creatorID
-        createdAt
-        ingredientIDs
-        ingredients {
-          nextToken
-        }
-        steps {
-          nextToken
-        }
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const ingredientByCategory = /* GraphQL */ `
-  query IngredientByCategory(
-    $category: INGREDIENTCATEGORY
-    $sortDirection: ModelSortDirection
-    $filter: ModelIngredientFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    ingredientByCategory(
-      category: $category
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        category
-        scale
-        createdAt
-        updatedAt
-      }
-      nextToken
+      startedAt
     }
   }
 `;
@@ -280,9 +93,13 @@ export const stockByCreatorID = /* GraphQL */ `
         creatorID
         createdAt
         description
+        _version
+        _deleted
+        _lastChangedAt
         updatedAt
       }
       nextToken
+      startedAt
     }
   }
 `;

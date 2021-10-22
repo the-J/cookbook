@@ -32,7 +32,7 @@ const LogInView = () => {
   }, [validationErrors]);
 
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/recipes" } };
+  let { from } = location.state || { from: { pathname: "/pantry" } };
 
   // useEffect(() => {
   //   console.log("initial login", { user });

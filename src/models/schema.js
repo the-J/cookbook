@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Recipe": {
-            "name": "Recipe",
+        "Stock": {
+            "name": "Stock",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,18 +10,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "time": {
-                    "name": "time",
+                "name": {
+                    "name": "name",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
-                "difficulty": {
-                    "name": "difficulty",
+                "quantity": {
+                    "name": "quantity",
                     "isArray": false,
                     "type": "Int",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "creatorID": {
@@ -38,41 +38,12 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "ingredientIDs": {
-                    "name": "ingredientIDs",
-                    "isArray": true,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "ingredients": {
-                    "name": "ingredients",
-                    "isArray": true,
-                    "type": {
-                        "model": "Ingredient"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "id"
-                    }
-                },
-                "steps": {
-                    "name": "steps",
-                    "isArray": true,
-                    "type": {
-                        "model": "PrepStep"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": "recipeID"
-                    }
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": true,
+                    "attributes": []
                 },
                 "updatedAt": {
                     "name": "updatedAt",
@@ -84,7 +55,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Recipes",
+            "pluralName": "Stocks",
             "attributes": [
                 {
                     "type": "model",
@@ -97,199 +68,13 @@ export const schema = {
                         "fields": [
                             "creatorID"
                         ],
-                        "queryField": "recipeByCreatorID"
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byIngredientIDs",
-                        "fields": [
-                            "ingredientIDs"
-                        ],
-                        "queryField": "recipeByIngredientIDs"
-                    }
-                }
-            ]
-        },
-        "Ingredient": {
-            "name": "Ingredient",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "name": {
-                    "name": "name",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "category": {
-                    "name": "category",
-                    "isArray": true,
-                    "type": {
-                        "enum": "Ingredientcategory"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "scale": {
-                    "name": "scale",
-                    "isArray": true,
-                    "type": {
-                        "enum": "Ingredientscale"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Ingredients",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCategoryIndex",
-                        "fields": [
-                            "category"
-                        ],
-                        "queryField": "ingredientByCategory"
-                    }
-                }
-            ]
-        },
-        "PrepStep": {
-            "name": "PrepStep",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "entryNumber": {
-                    "name": "entryNumber",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "description": {
-                    "name": "description",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "time": {
-                    "name": "time",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "recipeID": {
-                    "name": "recipeID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "ingredientIDs": {
-                    "name": "ingredientIDs",
-                    "isArray": true,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "PrepSteps",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {
-                        "subscriptions": null
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRecipeID",
-                        "fields": [
-                            "recipeID"
-                        ]
+                        "queryField": "stockByCreatorID"
                     }
                 }
             ]
         }
     },
-    "enums": {
-        "Ingredientcategory": {
-            "name": "Ingredientcategory",
-            "values": [
-                "WARZYWO",
-                "NABIAL",
-                "OWOC",
-                "PRZYPRAWA",
-                "MIESO"
-            ]
-        },
-        "Ingredientscale": {
-            "name": "Ingredientscale",
-            "values": [
-                "KG",
-                "G",
-                "ML",
-                "SZTUK"
-            ]
-        }
-    },
+    "enums": {},
     "nonModels": {},
-    "version": "ba8b53fad1ef66ca3d6ab902da7c9af6"
+    "version": "0cd557ce3991c91d92101fb9fe7b80b8"
 };

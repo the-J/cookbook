@@ -4,57 +4,6 @@
 #@model
 #@key(fields: ["creatorID"]) {}
 
-type Recipe
-@model
-@key(name: "byCreatorID", fields: ["creatorID"], queryField: "recipeByCreatorID")
-@key(name: "byIngredientIDs", fields: ["ingredientIDs"], queryField: "recipeByIngredientIDs")
-{
-    id: ID!
-    time: String
-    difficulty: Int
-    creatorID: ID!
-    createdAt: String!
-    ingredientIDs: [ID]
-    ingredients: [Ingredient] @connection(fields: ["id"])
-    steps : [PrepStep] @connection(keyName: "byRecipeID", fields: ["id"])
-}
-
-type PrepStep
-@model(subscriptions: null)
-@key(name: "byRecipeID", fields: ["recipeID"])
-{
-    id: ID!
-    entryNumber: Int
-    description: String
-    time: String
-    recipeID: ID!
-    ingredientIDs: [ID]
-}
-
-type Ingredient
-@model
-@key (name: "byCategoryIndex", fields: ["category"], queryField: "ingredientByCategory")
-{
-    id: ID!
-    name: String!
-    category: [INGREDIENTCATEGORY]
-    scale: [INGREDIENTSCALE]
-}
-
-enum INGREDIENTSCALE {
-    KG
-    G
-    ML
-    SZTUK
-}
-
-enum INGREDIENTCATEGORY {
-    WARZYWO
-    NABIAL
-    OWOC
-    PRZYPRAWA
-    MIESO
-}
 
 type Stock
 @model

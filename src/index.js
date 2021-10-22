@@ -4,11 +4,21 @@ import "normalize.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
-import Amplify from "aws-amplify";
+import Amplify, { Hub } from "aws-amplify";
 import awsconfig from "./aws-exports";
 import App from "./App";
 
 Amplify.configure(awsconfig);
+Amplify.Logger.LOG_LEVEL = "DEBUG";
+// const listener = Hub.listen("datastore", async (hubData) => {
+//   const { event, data } = hubData.payload;
+//   if (event === "ready") {
+//     console.log("datastore ready");
+//   }
+// });
+//
+// // Remove listener
+// listener();
 
 ReactDOM.render(
   <React.StrictMode>
