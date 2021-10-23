@@ -77,6 +77,7 @@ function useAuthContext() {
     try {
       return (await Auth.currentAuthenticatedUser()) as CognitoUser & {
         attributes: CognitoUserAttributes;
+        username: String;
       };
     } catch (error: any) {
       throw error.message;
@@ -89,6 +90,7 @@ function useAuthContext() {
       const cognitoUser = await getCurrentUser();
       setTokenInLocalStorage(cognitoUser);
       setUserInLocalStorage({
+        id: cognitoUser.username,
         email: cognitoUser.attributes.email,
         name: cognitoUser.attributes.name,
       });
@@ -99,6 +101,7 @@ function useAuthContext() {
         type: "LOGIN_SUCCESS",
         userConfig: cognitoUser,
         user: {
+          id: cognitoUser.username,
           name: attributes.name,
           email: attributes.email,
           picture: attributes.picture,

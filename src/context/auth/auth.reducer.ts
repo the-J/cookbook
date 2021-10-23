@@ -1,6 +1,7 @@
 import type { CognitoUser } from "@aws-amplify/auth";
 
 export type User = {
+  id: String;
   name: string;
   email: string;
   picture?: string;
