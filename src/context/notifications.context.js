@@ -7,14 +7,11 @@ export const NotificationsContext = createContext({
 });
 
 const NotificationsProvider = (props) => {
-  const [message, setError] = useState(null);
+  const [message, setNotif] = useState(null);
 
-  const removeNotif = () => setError(null);
+  const removeNotif = () => setNotif(null);
 
-  const pushNotif = (message, status) => {
-    console.log({ message }, { status });
-    setError({ message, status });
-  };
+  const pushNotif = (message, status) => setNotif({ message, status });
 
   const contextValue = {
     message,

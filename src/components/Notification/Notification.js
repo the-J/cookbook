@@ -5,17 +5,18 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNotif } from "../../context/notifications.context";
 
 const Notification = ({ children }) => {
-  const { error, removeNotif } = useNotif();
+  const { message, removeNotif } = useNotif();
 
   useEffect(() => {
-    if (error?.message) {
-      toast(error.message);
+    console.log({ message });
+    if (message?.message) {
+      toast(message.message);
     }
 
     return () => {
       removeNotif();
     };
-  }, [error, removeNotif]);
+  }, [message, removeNotif]);
 
   return (
     <>
