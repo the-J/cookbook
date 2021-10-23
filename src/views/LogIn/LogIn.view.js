@@ -6,124 +6,131 @@ import { useNotif } from "../../context/notifications.context";
 import { logIn } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
 
-const initState = {
-  email: "",
-  password: "",
+const initialState = {
+  values: {
+    email: "",
+    password: "",
+  },
+  errors: {
+    email: "",
+    password: "",
+  },
 };
 
 const LogInView = () => {
   const { initializeUser } = useAuthContext();
-  let history = useHistory();
+  const history = useHistory();
   const { pushNotif } = useNotif();
-  // const user = useLogIn();
+  const location = useLocation();
 
-  const [isValid, setIsValid] = useState(true);
-  const [validationErrors, setValidationError] = useState(initState);
-  const [fieldValues, setFieldValues] = useState(initState);
+  const [formState, setFormState] = useState(initialState);
+  const [isValid, setIsValid] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const checkIsValid = () => {
-    const isValid = Object.values(validationErrors).some((x) => !x);
+  const validateForm = () => {
+    const noErrors = Object.values(formState.errors).every((x) => !x);
+    const fieldsFilled = Object.values(formState.values).every((x) => !!x);
+    const isValid = noErrors && fieldsFilled;
     setIsValid(isValid);
   };
 
-  useEffect(() => {
-    checkIsValid();
-  }, [validationErrors]);
-
-  let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/pantry" } };
-
-  // useEffect(() => {
-  //   console.log("initial login", { user });
-  //   if (user) {
-  //     history.replace(from);
-  //   }
-  // }, [user]);
+  useEffect(() => validateForm(), [formState]);
 
   const onSubmit = (e) => {
-    console.log("onsubmit");
     e.preventDefault();
-
-    logIn(fieldValues.email, fieldValues.password)
+    setIsLoggingIn(true);
+    const { email, password } = formState.values;
+    logIn(email, password)
       .then(async () => {
         await initializeUser();
+        const { from } = location.state || { from: { pathname: "/pantry" } };
         history.replace(from);
       })
-      .catch((err) => pushNotif(err, "AWS err"));
+      .catch((err) => {
+        setIsLoggingIn(false);
+        pushNotif(err, "err");
+      });
   };
 
-  // validation:
-  // trim
-  // check some shit
-  // go
+  const onChange = (e) => {
+    const { name, value, validationMessage } = e.target;
 
-  const validateValue = (e) => {
-    // const eValue = e.target.value
-    console.log(e.target);
-    const eName = e.target.name;
-    switch (eName) {
-      case "email":
-        setValidationError({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        break;
-      case "password":
-        setValidationError({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        break;
-      default:
-        return;
-    }
+    setFormState({
+      values: {
+        ...formState.values,
+        [name]: value,
+      },
+      errors: {
+        ...formState.errors,
+        [name]: validationMessage,
+      },
+    });
   };
+
   return (
     <LayoutMain>
       <div className="columns">
         <div className="column" />
         <div className="column">
           <form onSubmit={onSubmit} className="mx-4">
-            <input
-              required
-              placeholder="Email"
-              type="email"
-              name="email"
-              onChange={(e) =>
-                setFieldValues((prevState) => ({
-                  ...prevState,
-                  email: e.target.value,
-                }))
-              }
-              className={`block input form-control ${
-                validationErrors.email ? "is-invalid" : ""
-              }`}
-            />
-            {validationErrors.email && <p>{validationErrors.email}</p>}
+            <div className="block">
+              <h1 style={{ fontSize: "2rem" }}>Log in</h1>
+            </div>
 
-            <input
-              required
-              placeholder="Password"
-              type="password"
-              name="password"
-              onChange={(e) =>
-                setFieldValues((prevState) => ({
-                  ...prevState,
-                  password: e.target.value,
-                }))
-              }
-              className={`block input form-control ${
-                validationErrors.password ? "is-invalid" : ""
-              }`}
-            />
-            {validationErrors.password && <p>{validationErrors.password}</p>}
-            <button
-              className="block button is-primary"
-              type="submit"
-              // disabled={isValid}
-            >
-              Log In
-            </button>
+            <div className="block">
+              <input
+                placeholder="Email"
+                type="email"
+                name="email"
+                autoComplete="email"
+                onChange={onChange}
+                className={`input ${formState.errors.email && "is-danger"}
+                  ${
+                    !formState.errors.email &&
+                    formState.values.email &&
+                    "is-success"
+                  }`}
+              />
+              {formState.errors.email && (
+                <p style={{ color: "red" }}>{formState.errors.email}</p>
+              )}
+            </div>
+
+            <div className="block">
+              <input
+                placeholder="Password"
+                type="password"
+                name="password"
+                autoComplete="new-password"
+                minLength={8}
+                onChange={onChange}
+                className={`input ${formState.errors.password && "is-danger"}
+                  ${
+                    !formState.errors.password &&
+                    formState.values.password &&
+                    "is-success"
+                  }`}
+              />
+              {formState.errors.password && (
+                <p style={{ color: "red" }}>{formState.errors.password}</p>
+              )}
+            </div>
+
+            <div className="buttons block is-grouped level">
+              <button
+                className={`button is-primary ${isLoggingIn && "is-loading"}`}
+                type="submit"
+                disabled={!isValid}
+              >
+                Log in
+              </button>
+              <button
+                className="button is-info is-right"
+                onClick={() => history.push("sign-up")}
+              >
+                Sign up
+              </button>
+            </div>
           </form>
         </div>
         <div className="column" />
