@@ -12,41 +12,26 @@ import { useAuthContext } from "../../context/auth/auth.context";
 const initialState = {
   name: "",
   quantity: 0,
-};
-
-const dummyState = {
-  name: "test",
-  quantity: 10,
-  // readonly creatorID: string;
-  description: "test description",
+  description: "",
 };
 
 const PantryView = () => {
   const { state } = useAuthContext();
-  console.log({ state });
   const [openModalState, setOpenModalState] = useState(false);
   const [stock, setStock] = useState([]);
   const [newStock, setNewStock] = useState(initialState);
 
   useEffect(() => {
-    console.log("fetchstock effect");
-
     fetchStock();
     const subscription = DataStore.observe(Stock).subscribe(() => fetchStock());
     return () => subscription.unsubscribe();
   }, []);
 
   function onChange(e) {
-    console.log("inchange");
     e.preventDefault();
-    let value = e.target.value;
+    const value = e.target.value;
     const name = e.target.name;
 
-    if (name === "quantity") {
-      value = Number(value);
-    }
-
-    console.log(name, value, typeof value);
     setNewStock({
       ...newStock,
       [name]: value,
@@ -54,25 +39,20 @@ const PantryView = () => {
   }
 
   async function fetchStock() {
-    console.log("fetchstock");
-
     const stock = await DataStore.query(Stock);
-    setStock(stock);
+    setStock(stock ? stock : []);
   }
+
   async function createStock() {
     console.log("createStock");
 
     const createdStock = {
       ...newStock,
+      quantity: Number(newStock.quantity),
       id: nanoid(),
       creatorID: state.userConfig.username,
       createdAt: new Date().toISOString(),
-      description: "description",
     };
-
-    console.log("asdasdasdasdasdasdasdasdasdasdasdawdasdawda", {
-      createdStock,
-    });
 
     // @TODO createStock
     try {
@@ -83,6 +63,8 @@ const PantryView = () => {
     } catch (error) {
       console.log("Error saving stock", error);
     }
+
+    setOpenModalState(false);
   }
 
   return (
@@ -96,9 +78,11 @@ const PantryView = () => {
           return createStock();
         }}
       >
+        <h3>All fields required</h3>
+        <br />
         <input
           name="name"
-          className="input is-large"
+          className="input is-large block"
           type="text"
           value={newStock.name}
           placeholder="Name"
@@ -106,10 +90,16 @@ const PantryView = () => {
         />
         <input
           name="quantity"
-          className="input is-large"
+          className="input is-large block"
           type="number"
           value={newStock.quantity}
           placeholder="Quantity"
+          onChange={onChange}
+        />
+        <textarea
+          name="description"
+          className="textarea has-fixed-size block"
+          placeholder="Description"
           onChange={onChange}
         />
       </Modal>

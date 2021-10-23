@@ -2,14 +2,14 @@ import React from "react";
 import "App.styles.scss";
 import AppRouter from "./router";
 import { AuthProvider } from "./context/auth/auth.context";
-import { ErrorProvider } from "./context/error.context";
+import { NotificationsProvider } from "./context/notifications.context";
 
 const App = () => (
   <React.StrictMode>
     <AuthProvider>
-      <ErrorProvider>
+      <NotificationsProvider>
         <AppRouter />
-      </ErrorProvider>
+      </NotificationsProvider>
     </AuthProvider>
   </React.StrictMode>
 );

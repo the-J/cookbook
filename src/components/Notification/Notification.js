@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useError } from "../../context/error.context";
+
+import { useNotif } from "../../context/notifications.context";
 
 const Notification = ({ children }) => {
-  const { error, removeError } = useError();
+  const { error, removeNotif } = useNotif();
 
   useEffect(() => {
     if (error?.message) {
@@ -12,9 +13,9 @@ const Notification = ({ children }) => {
     }
 
     return () => {
-      removeError();
+      removeNotif();
     };
-  }, [error, removeError]);
+  }, [error, removeNotif]);
 
   return (
     <>

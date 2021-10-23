@@ -18,6 +18,7 @@ const PrivateRoute = ({ children, path }) => {
     }
   }, []);
 
+  // @TODO propbably need to handle case when no user better
   useEffect(() => {
     if (state.user) {
       setUser(state.user);

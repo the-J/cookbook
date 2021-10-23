@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 
-import { useError } from "../../context/error.context";
+import { useNotif } from "../../context/notifications.context";
 import { signUp } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
-import { useHistory } from "react-router-dom";
 
 const SignUpView = () => {
   let history = useHistory();
-  const { addError } = useError();
+  const { pushNotif } = useNotif();
   const [validationErrors, setValidationError] = useState({
     name: "",
     email: "",
@@ -20,15 +20,6 @@ const SignUpView = () => {
   });
   const [isValid, setIsValid] = useState(true);
 
-  // let history = useHistory();
-  // let location = useLocation();
-  // let auth = useAuthContext();
-  //
-  // let { from } = location.state || { from: { pathname: "/" } };
-  // let login = () => {
-  //   history.replace(from);
-  // };
-
   const checkIsValid = () => {
     const isValid = Object.values(validationErrors).some((x) => !x);
     setIsValid(isValid);
@@ -39,49 +30,23 @@ const SignUpView = () => {
   }, [validationErrors]);
 
   const onSubmit = (e) => {
-    console.log("onsubmit");
     e.preventDefault();
     signUp(fieldValues.name, fieldValues.email, fieldValues.password)
       .then(() => history.push("/log-in"))
-      .catch((err) => addError(err, "AWS err"));
+      .catch((err) => pushNotif(err, "AWS err"));
   };
 
-  // validation:
-  // trim
-  // check some shit
-  // go
-
-  const validateValue = (e) => {
+  const onChange = (e) => {
     // const eValue = e.target.value
-    console.log(e.target);
-    const eName = e.target.name;
-    switch (eName) {
-      case "name":
-        setValidationError({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        console.log({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        break;
-      case "email":
-        setValidationError({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        break;
-      case "password":
-        setValidationError({
-          ...validationErrors,
-          [eName]: e.target.validationMessage,
-        });
-        break;
-      default:
-        return;
-    }
+    const name = e.target.name;
+    const validationMessage = e.target.validationMessage;
+    console.log(name, validationMessage);
+    setValidationError({
+      ...validationErrors,
+      [name]: validationMessage,
+    });
   };
+
   return (
     <LayoutMain>
       <div className="columns">
@@ -112,12 +77,7 @@ const SignUpView = () => {
               placeholder="Email"
               type="email"
               name="email"
-              onChange={(e) =>
-                setFieldValues((prevState) => ({
-                  ...prevState,
-                  email: e.target.value,
-                }))
-              }
+              onChange={onChange}
               className={`block input form-control ${
                 validationErrors.email ? "is-invalid" : ""
               }`}

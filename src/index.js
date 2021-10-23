@@ -4,12 +4,15 @@ import "normalize.css";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 
-import Amplify, { Hub } from "aws-amplify";
+import Amplify from "aws-amplify";
 import awsconfig from "./aws-exports";
 import App from "./App";
 
 Amplify.configure(awsconfig);
-Amplify.Logger.LOG_LEVEL = "DEBUG";
+// @TODO run logger in dev mode
+// Amplify.Logger.LOG_LEVEL = "DEBUG";
+
+// @TODO possibly helpful
 // const listener = Hub.listen("datastore", async (hubData) => {
 //   const { event, data } = hubData.payload;
 //   if (event === "ready") {
@@ -32,6 +35,7 @@ ReactDOM.render(
 // Learn more about service workers: https://cra.link/PWA
 serviceWorkerRegistration.register();
 
+// @TODO web vitals
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

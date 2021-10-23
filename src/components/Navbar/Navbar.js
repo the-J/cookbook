@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
-import { useError } from "../../context/error.context";
+import { useNotif } from "../../context/notifications.context";
 import { signOut } from "../../auth/authUser";
 
 const Navbar = () => {
   const history = useHistory();
-  const { addError } = useError();
+  const { pushNotif } = useNotif();
   const { location } = useLocation();
   const {
     state: { isAuthenticated, user },
@@ -24,7 +24,7 @@ const Navbar = () => {
         changeDropdownState();
         history.push("/log-in");
       })
-      .catch((err) => addError(err, "AWS err"));
+      .catch((err) => pushNotif(err, "AWS err"));
   };
 
   return (

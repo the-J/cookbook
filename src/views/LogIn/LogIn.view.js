@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
-import { useError } from "../../context/error.context";
+import { useNotif } from "../../context/notifications.context";
 import { logIn } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
-import { useLogIn } from "../../hooks/useAuth";
 
 const initState = {
   email: "",
@@ -15,7 +14,7 @@ const initState = {
 const LogInView = () => {
   const { initializeUser } = useAuthContext();
   let history = useHistory();
-  const { addError } = useError();
+  const { pushNotif } = useNotif();
   // const user = useLogIn();
 
   const [isValid, setIsValid] = useState(true);
@@ -50,7 +49,7 @@ const LogInView = () => {
         await initializeUser();
         history.replace(from);
       })
-      .catch((err) => addError(err, "AWS err"));
+      .catch((err) => pushNotif(err, "AWS err"));
   };
 
   // validation:

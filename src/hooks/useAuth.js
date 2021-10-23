@@ -4,12 +4,12 @@ import { useHistory, useLocation } from "react-router-dom";
 import { USER_LOCALSTORAGE_KEY } from "../constants";
 import { logIn } from "../auth/authUser";
 import { useAuthContext } from "../context/auth/auth.context";
-import { useError } from "../context/error.context";
+import { useNotif } from "../context/notifications.context";
 
 export const useLogIn = (username, password) => {
   const { initializeUser } = useAuthContext();
   let history = useHistory();
-  const { addError } = useError();
+  const { pushNotif } = useNotif();
 
   let user = useRef(null);
   let location = useLocation();
@@ -36,7 +36,7 @@ export const useLogIn = (username, password) => {
         await initializeUser();
         // history.replace(from);
       })
-      .catch((err) => addError(err, "AWS err"));
+      .catch((err) => pushNotif(err, "AWS err"));
   }, []);
 
   return user;
