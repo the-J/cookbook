@@ -11,7 +11,7 @@ const NotificationsProvider = (props) => {
 
   const removeNotif = () => setNotif(null);
 
-  const pushNotif = (message, status) => setNotif({ message, status });
+  const pushNotif = (message, status = "info") => setNotif({ message, status });
 
   const contextValue = {
     message,

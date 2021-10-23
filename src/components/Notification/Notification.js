@@ -8,9 +8,15 @@ const Notification = ({ children }) => {
   const { message, removeNotif } = useNotif();
 
   useEffect(() => {
-    console.log({ message });
-    if (message?.message) {
-      toast(message.message);
+    if (message?.message && message?.status) {
+      switch (message.status) {
+        case "err":
+          toast.error(message.message);
+          break;
+        default:
+          toast.info(message.message);
+          break;
+      }
     }
 
     return () => {
