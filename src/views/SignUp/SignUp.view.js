@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { useNotif } from "../../context/notifications.context";
+import { useNotif } from "../../context/notif/notifications.context";
 import { signUp } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
 

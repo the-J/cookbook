@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
-import { useNotif } from "../../context/notifications.context";
+import { useNotif } from "../../context/notif/notifications.context";
 import { signOut } from "../../auth/authUser";
 
 const Navbar = () => {

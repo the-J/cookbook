@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { useNotif } from "../../context/notifications.context";
+import { useNotif } from "../../context/notif/notifications.context";
 
 const Notification = ({ children }) => {
   const { message, removeNotif } = useNotif();

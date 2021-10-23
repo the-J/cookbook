@@ -2,7 +2,7 @@ import React from "react";
 import "App.styles.scss";
 import AppRouter from "./router";
 import { AuthProvider } from "./context/auth/auth.context";
-import { NotificationsProvider } from "./context/notifications.context";
+import { NotificationsProvider } from "./context/notif/notifications.context";
 
 const App = () => (
   <React.StrictMode>

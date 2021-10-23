@@ -4,7 +4,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { USER_LOCALSTORAGE_KEY } from "../constants";
 import { logIn } from "../auth/authUser";
 import { useAuthContext } from "../context/auth/auth.context";
-import { useNotif } from "../context/notifications.context";
+import { useNotif } from "../context/notif/notifications.context";
 
 export const useLogIn = (username, password) => {
   const { initializeUser } = useAuthContext();

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
-import { useNotif } from "../../context/notifications.context";
+import { useNotif } from "../../context/notif/notifications.context";
 import { logIn } from "../../auth/authUser";
 import { LayoutMain } from "../../layouts";
 
