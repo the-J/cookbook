@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Redirect, Route } from "react-router-dom";
+
 import { PantryView, HomeView, LogInView, SignUpView } from "views";
 import { useAuthContext } from "./context/auth/auth.context";
 
 const PrivateRoute = ({ children, path }) => {
   const { state, initializeUser } = useAuthContext();
   const [user, setUser] = useState(null);
-  const [ifUser, setIfUser] = useState(false);
 
   const getUser = async () => {
     await initializeUser();
@@ -18,15 +18,14 @@ const PrivateRoute = ({ children, path }) => {
     }
   }, []);
 
-  // @TODO propbably need to handle case when no user better
   useEffect(() => {
     if (state.user) {
       setUser(state.user);
-      setIfUser(true);
     }
   }, [state.user]);
 
-  return ifUser ? (
+  // @TODO still don't like this mess
+  return user ? (
     <Route path={path} exact>
       {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
     </Route>
