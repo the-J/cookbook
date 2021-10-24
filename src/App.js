@@ -1,6 +1,6 @@
 import React from "react";
 import "App.styles.scss";
-import AppRouter from "./router";
+import AppRouter from "./router/router";
 import { AuthProvider } from "./context/auth/auth.context";
 import { NotificationsProvider } from "./context/notif/notifications.context";
 
