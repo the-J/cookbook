@@ -4,11 +4,11 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { useAuthContext } from "../../context/auth/auth.context";
 import { useNotif } from "../../context/notif/notifications.context";
 import { signOut } from "../../auth/authUser";
+import routes from "../../router/routes";
 
 const Navbar = () => {
   const history = useHistory();
   const { pushNotif } = useNotif();
-  const { location } = useLocation();
   const {
     state: { isAuthenticated, user },
     logOutUser,
@@ -22,7 +22,7 @@ const Navbar = () => {
       .then(async () => {
         logOutUser();
         changeDropdownState();
-        history.push("/log-in");
+        history.push(routes.logIn.pathName);
       })
       .catch((err) => pushNotif(err, "AWS err"));
   };
@@ -54,21 +54,24 @@ const Navbar = () => {
 
       <div className={`navbar-menu ${dropdownState && "is-active"}`}>
         <div className="navbar-start" onClick={changeDropdownState}>
-          <Link to="/sign-up" className="navbar-item">
-            Sign up
-          </Link>
-          <Link to="/log-in" className="navbar-item">
-            Log in
-          </Link>
-          <Link to="/" className="navbar-item">
-            Home
-          </Link>
-          <Link to="/pantry" className="navbar-item">
-            Pantry
-          </Link>
-          {/*<Link to="/recipes" className="navbar-item">*/}
-          {/*  Recipes*/}
-          {/*</Link>*/}
+          {isAuthenticated ? (
+            Object.values(routes).map((route) => {
+              return (
+                route.private && (
+                  <Link to={route.pathName} className="navbar-item" />
+                )
+              );
+            })
+          ) : (
+            <>
+              <Link to="/sign-up" className="navbar-item">
+                Sign up
+              </Link>
+              <Link to="/log-in" className="navbar-item">
+                Log in
+              </Link>
+            </>
+          )}
         </div>
 
         {isAuthenticated && (
