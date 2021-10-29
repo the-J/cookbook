@@ -1,25 +1,17 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import { AiOutlineCamera, MdOutlineFlipCameraIos } from "react-icons/all";
 
 let player = {};
 
-const ImageCapture = () => {
+const ImageCapture = ({ startCamera }) => {
   const cameraNumber = useRef(0);
-
   const [imageDataURL, setImageDataURL] = useState(null);
 
   const initializeMedia = async () => {
-    //reset if set earlier
     setImageDataURL(null);
-
-    if (!("mediaDevices" in navigator)) {
-      navigator.mediaDevices = {};
-    }
-
-    // create getUserMedia if not available
-    // or reassign if not created before asking
-    // user for permission
+    if (!("mediaDevices" in navigator)) navigator.mediaDevices = {};
     if (!("getUserMedia" in navigator.mediaDevices)) {
-      // check if does not have to fire
       navigator.mediaDevices.getUserMedia = (constraints) => {
         const getUserMedia =
           navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
@@ -35,11 +27,8 @@ const ImageCapture = () => {
       };
     }
 
-    //Get the details of video inputs of the device
     const videoInputs = await getListOfVideoInputs();
-    console.log({ videoInputs });
 
-    //The device has a camera
     if (videoInputs.length) {
       navigator.mediaDevices
         .getUserMedia({
@@ -49,10 +38,7 @@ const ImageCapture = () => {
             },
           },
         })
-        .then((stream) => {
-          console.log({ stream });
-          player.srcObject = stream;
-        })
+        .then((stream) => (player.srcObject = stream))
         .catch((error) => {
           // @TODO throw error like it should be
           console.error("no video", { error });
@@ -91,14 +77,8 @@ const ImageCapture = () => {
         });
       }
 
-      // switch to second camera
-      if (cameraNumber.current === 0) {
-        cameraNumber.current = 1;
-      }
-      // switch to first camera
-      else if (cameraNumber.current === 1) {
-        cameraNumber.current = 0;
-      }
+      if (cameraNumber.current === 0) cameraNumber.current = 1;
+      else if (cameraNumber.current === 1) cameraNumber.current = 0;
 
       // Restart based on camera input
       return initializeMedia();
@@ -113,26 +93,53 @@ const ImageCapture = () => {
 
   const getListOfVideoInputs = async () => {
     // Get the details of audio and video output of the device
+    //nFilter video outputs (for devices with multiple cameras)
     const enumerateDevices = await navigator.mediaDevices.enumerateDevices();
-
-    //Filter video outputs (for devices with multiple cameras)
     return enumerateDevices.filter((device) => device.kind === "videoinput");
   };
 
-  const playerORImage = Boolean(imageDataURL) ? (
-    <img src={imageDataURL} alt="cameraPic" />
+  const view = imageDataURL ? (
+    <img src={imageDataURL} alt="camera" />
   ) : (
     <video ref={(reference) => (player = reference)} autoPlay muted />
   );
 
+  const stopCamera = () => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => stream.getTracks().forEach((track) => track.stop()))
+      .catch((err) => console.log({ err }));
+  };
+
+  useEffect(() => {
+    if (startCamera) initializeMedia();
+    return () => stopCamera();
+  }, [startCamera]);
+
   return (
-    <div style={{ border: "1px solid red" }}>
-      {playerORImage}
-      <button onClick={initializeMedia}>Take Photo</button>
-      <button onClick={capturePicture}>Capture</button>
-      <button onClick={switchCamera}>Switch</button>
+    <div className="block">
+      {view}
+      {/*<button onClick={capturePicture}>Capture</button>*/}
+      {/*<button onClick={switchCamera}>Switch</button>*/}
+      <div className="buttons block is-grouped is-right">
+        <button
+          onClick={capturePicture}
+          // className={`button is-primary ${isLoggingIn && "is-loading"}`}
+          className="button is-primary is-large"
+          // type="submit"
+          // disabled={!isValid}
+        >
+          <AiOutlineCamera />
+        </button>
+        <button className="button is-info is-large" onClick={switchCamera}>
+          <MdOutlineFlipCameraIos />
+        </button>
+      </div>
     </div>
   );
 };
 
+ImageCapture.propTypes = {
+  startCamera: PropTypes.bool.isRequired,
+};
 export default ImageCapture;
