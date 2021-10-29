@@ -6,7 +6,7 @@ import { nanoid } from "nanoid";
 
 import { Stock } from "../../models";
 import { LayoutMain } from "../../layouts";
-import { Card, Modal } from "../../components";
+import { Card, ImageCapture, Modal } from "../../components";
 import { useAuthContext } from "../../context/auth/auth.context";
 
 const initialState = {
@@ -131,35 +131,35 @@ const PantryView = () => {
             </button>
           </div>
         </div>
-
-        <div className="columns">
-          <div
-            className="
-            column
-            is-10
-            is-offset-1
-            is-flex
-            is-flex-wrap-wrap
-            is-justify-content-center
-            is-align-items-center
-            p-0
-        "
-          >
-            {stock.length > 0 ? (
-              stock.map((el, i) => (
-                <Card
-                  name={el.name}
-                  date={el.createdAt}
-                  description={el.description}
-                  quantity={el.quantity}
-                  key={i}
-                />
-              ))
-            ) : (
-              <div>Nothing here</div>
-            )}
-          </div>
-        </div>
+        <ImageCapture />
+        {/*<div className="columns">*/}
+        {/*  <div*/}
+        {/*    className="*/}
+        {/*    column*/}
+        {/*    is-10*/}
+        {/*    is-offset-1*/}
+        {/*    is-flex*/}
+        {/*    is-flex-wrap-wrap*/}
+        {/*    is-justify-content-center*/}
+        {/*    is-align-items-center*/}
+        {/*    p-0*/}
+        {/*"*/}
+        {/*  >*/}
+        {/*    {stock.length > 0 ? (*/}
+        {/*      stock.map((el, i) => (*/}
+        {/*        <Card*/}
+        {/*          name={el.name}*/}
+        {/*          date={el.createdAt}*/}
+        {/*          description={el.description}*/}
+        {/*          quantity={el.quantity}*/}
+        {/*          key={i}*/}
+        {/*        />*/}
+        {/*      ))*/}
+        {/*    ) : (*/}
+        {/*      <div>Nothing here</div>*/}
+        {/*    )}*/}
+        {/*  </div>*/}
+        {/*</div>*/}
       </LayoutMain>
     </>
   );
