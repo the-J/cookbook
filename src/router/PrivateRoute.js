@@ -8,7 +8,7 @@ const PrivateRoute = ({ children, path }) => {
   const [user, setUser] = useState(null);
 
   const getUser = async () => {
-    // await initializeUser();
+    await initializeUser();
   };
 
   useEffect(() => {
@@ -24,17 +24,12 @@ const PrivateRoute = ({ children, path }) => {
   }, [state.user]);
 
   // @TODO still don't like this mess
-  // return user ? (
-  //   <Route path={path} exact>
-  //     {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
-  //   </Route>
-  // ) : null;
-
-  return (
+  // @TODO some info if fail or reload
+  return user ? (
     <Route path={path} exact>
-      {children}
+      {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
     </Route>
-  );
+  ) : null;
 };
 
 export default PrivateRoute;
