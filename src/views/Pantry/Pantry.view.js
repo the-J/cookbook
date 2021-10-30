@@ -1,20 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
 import { nanoid } from "nanoid";
+import { AiOutlinePlus, BiImageAdd } from "react-icons/all";
 
 import { Stock } from "../../models";
 import { LayoutMain } from "../../layouts";
 import { Card, ImageCapture, Modal } from "../../components";
 import { useAuthContext } from "../../context/auth/auth.context";
-import { AiOutlinePlus, BiImageAdd } from "react-icons/all";
+import useUploadPhoto from "../../hooks/useUploadImage";
 
 const initialState = {
   name: "",
   quantity: 0,
   description: "",
+  imgName: "",
 };
 
 const PantryView = () => {
+  // @TODO create context for this guy
+  // useUploadPhoto should be in ImageCapture
+  const { imgName, uploadImage } = useUploadPhoto();
+
   const { state } = useAuthContext();
   const [openModalState, setOpenModalState] = useState(false);
   const [stock, setStock] = useState([]);
@@ -44,14 +50,14 @@ const PantryView = () => {
   }
 
   async function createStock() {
-    console.log("createStock");
-
+    // @TODO validate all that shiiiiiii
     const createdStock = {
       ...newStock,
       quantity: Number(newStock.quantity),
       id: nanoid(),
       creatorID: state.user.id,
       createdAt: new Date().toISOString(),
+      imgName,
     };
 
     // @TODO createStock
@@ -81,7 +87,10 @@ const PantryView = () => {
         <h3>All fields required</h3>
         <br />
         {displayImageCapture && (
-          <ImageCapture startCamera={displayImageCapture} />
+          <ImageCapture
+            startCamera={displayImageCapture}
+            uploadImage={uploadImage}
+          />
         )}
         <div className="field is-grouped">
           <input
@@ -160,12 +169,14 @@ const PantryView = () => {
           >
             {stock.length > 0 ? (
               stock.map((el, i) => (
+                // @TODO wrap this props into Stock
                 <Card
                   name={el.name}
                   date={el.createdAt}
                   description={el.description}
                   quantity={el.quantity}
                   key={i}
+                  img={el.imgName}
                 />
               ))
             ) : (
