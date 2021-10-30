@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Storage } from "aws-amplify";
 import { nanoid } from "nanoid";
 
@@ -19,19 +19,7 @@ const useUploadPhoto = () => {
     Storage.put(imgKey, setNeaBlobHeader, {
       level: "public",
       contentType: "image/png",
-    }).then((result) => {
-      setImgName(result.key);
-
-      // const image = {
-      //   file: {
-      //     bucket: awsconfig.aws_user_files_s3_bucket,
-      //     region: awsconfig.aws_user_files_s3_bucket_region,
-      //     key: imgKey,
-      //   },
-      // };
-
-      // return uploadToStore(image, imgKey);
-    });
+    }).then((result) => setImgName(result.key));
   };
 
   return { imgName, uploadImage };
