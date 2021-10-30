@@ -21,6 +21,7 @@ export const syncStocks = /* GraphQL */ `
         creatorID
         createdAt
         description
+        imgName
         _version
         _deleted
         _lastChangedAt
@@ -40,6 +41,7 @@ export const getStock = /* GraphQL */ `
       creatorID
       createdAt
       description
+      imgName
       _version
       _deleted
       _lastChangedAt
@@ -61,85 +63,10 @@ export const listStocks = /* GraphQL */ `
         creatorID
         createdAt
         description
+        imgName
         _version
         _deleted
         _lastChangedAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const syncPictures = /* GraphQL */ `
-  query SyncPictures(
-    $filter: ModelPictureFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPictures(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        file {
-          bucket
-          region
-          key
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
-        updatedAt
-      }
-      nextToken
-      startedAt
-    }
-  }
-`;
-export const getPicture = /* GraphQL */ `
-  query GetPicture($id: ID!) {
-    getPicture(id: $id) {
-      id
-      name
-      file {
-        bucket
-        region
-        key
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listPictures = /* GraphQL */ `
-  query ListPictures(
-    $filter: ModelPictureFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listPictures(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        file {
-          bucket
-          region
-          key
-        }
-        _version
-        _deleted
-        _lastChangedAt
-        createdAt
         updatedAt
       }
       nextToken
@@ -169,6 +96,7 @@ export const stockByCreatorID = /* GraphQL */ `
         creatorID
         createdAt
         description
+        imgName
         _version
         _deleted
         _lastChangedAt

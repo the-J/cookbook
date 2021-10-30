@@ -10,6 +10,7 @@ export const onCreateStock = /* GraphQL */ `
       creatorID
       createdAt
       description
+      imgName
       _version
       _deleted
       _lastChangedAt
@@ -26,6 +27,7 @@ export const onUpdateStock = /* GraphQL */ `
       creatorID
       createdAt
       description
+      imgName
       _version
       _deleted
       _lastChangedAt
@@ -42,63 +44,10 @@ export const onDeleteStock = /* GraphQL */ `
       creatorID
       createdAt
       description
+      imgName
       _version
       _deleted
       _lastChangedAt
-      updatedAt
-    }
-  }
-`;
-export const onCreatePicture = /* GraphQL */ `
-  subscription OnCreatePicture {
-    onCreatePicture {
-      id
-      name
-      file {
-        bucket
-        region
-        key
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdatePicture = /* GraphQL */ `
-  subscription OnUpdatePicture {
-    onUpdatePicture {
-      id
-      name
-      file {
-        bucket
-        region
-        key
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeletePicture = /* GraphQL */ `
-  subscription OnDeletePicture {
-    onDeletePicture {
-      id
-      name
-      file {
-        bucket
-        region
-        key
-      }
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
       updatedAt
     }
   }
