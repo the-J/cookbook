@@ -25,11 +25,11 @@ const PrivateRoute = ({ children, path }) => {
 
   // @TODO still don't like this mess
   // @TODO some info if fail or reload
-  return user ? (
+  return (
     <Route path={path} exact>
       {user ? children : <Redirect to={{ pathname: "/log-in" }} />}
     </Route>
-  ) : null;
+  );
 };
 
 export default PrivateRoute;
