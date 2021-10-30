@@ -4,7 +4,7 @@ import { AiOutlineCamera, MdOutlineFlipCameraIos } from "react-icons/all";
 
 let player = {};
 
-const ImageCapture = ({ startCamera }) => {
+const ImageCapture = ({ startCamera, uploadImage }) => {
   const cameraNumber = useRef(0);
   const [imageDataURL, setImageDataURL] = useState(null);
 
@@ -50,7 +50,6 @@ const ImageCapture = ({ startCamera }) => {
   };
 
   const capturePicture = () => {
-    console.log("capturecanvas");
     const canvas = document.createElement("canvas");
     canvas.width = player.videoWidth;
     canvas.height = player.videoHeight;
@@ -62,8 +61,9 @@ const ImageCapture = ({ startCamera }) => {
       track.stop();
     });
 
-    console.log(canvas.toDataURL());
-    setImageDataURL(canvas.toDataURL());
+    const img = canvas.toDataURL();
+    setImageDataURL(img);
+    return uploadImage(img);
   };
 
   const switchCamera = async () => {
@@ -112,23 +112,15 @@ const ImageCapture = ({ startCamera }) => {
   };
 
   useEffect(() => {
-    if (startCamera) initializeMedia();
+    if (startCamera) return initializeMedia();
     return () => stopCamera();
   }, [startCamera]);
 
   return (
     <div className="block">
       {view}
-      {/*<button onClick={capturePicture}>Capture</button>*/}
-      {/*<button onClick={switchCamera}>Switch</button>*/}
       <div className="buttons block is-grouped is-right">
-        <button
-          onClick={capturePicture}
-          // className={`button is-primary ${isLoggingIn && "is-loading"}`}
-          className="button is-primary is-large"
-          // type="submit"
-          // disabled={!isValid}
-        >
+        <button onClick={capturePicture} className="button is-primary is-large">
           <AiOutlineCamera />
         </button>
         <button className="button is-info is-large" onClick={switchCamera}>
@@ -141,5 +133,7 @@ const ImageCapture = ({ startCamera }) => {
 
 ImageCapture.propTypes = {
   startCamera: PropTypes.bool.isRequired,
+  uploadImage: PropTypes.func.isRequired,
 };
+
 export default ImageCapture;
