@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { trimToLength } from "../../utils/utils";
 
-const Card = ({ name, subTitle, date, description, quantity }) => {
+import { trimToLength } from "../../utils/utils";
+import getImgURL from "../../utils/getImgURL";
+
+const Card = ({ name, date, description, quantity, img }) => {
+  const [imgURL, setImgURL] = useState(img);
+
+  const getImage = async () => {
+    // @TODO better validation - this is stupid :)
+    if (!img.includes("http")) {
+      const imgURL = await getImgURL(img);
+      setImgURL(imgURL);
+    }
+  };
+
+  useEffect(() => {
+    getImage();
+  }, []);
+
   return (
     <div
       className="card m-1"
@@ -10,27 +26,16 @@ const Card = ({ name, subTitle, date, description, quantity }) => {
     >
       <div className="card-image">
         <figure className="image is-4by3">
-          <img
-            src="https://bulma.io/images/placeholders/1280x960.png"
-            alt="Placeholder image"
-          />
+          <img src={imgURL} alt="Placeholder" />
         </figure>
       </div>
       <div className="card-content">
         <div className="media">
           <div className="media-content">
             <p className="title is-5">{trimToLength(name, 10)}</p>
-            {subTitle && <p className="subtitle is-6">{subTitle}</p>}
             {quantity && <p className="subtitle is-6">{quantity}</p>}
           </div>
         </div>
-
-        {description && date && (
-          <div className="content">
-            <p>{description}</p>
-            <time dateTime="2016-1-1">{date.split("T")[0]}</time>
-          </div>
-        )}
       </div>
     </div>
   );
@@ -38,13 +43,14 @@ const Card = ({ name, subTitle, date, description, quantity }) => {
 
 Card.propTypes = {
   name: PropTypes.string.isRequired,
-  subTitle: PropTypes.string,
-  date: PropTypes.string,
-  description: PropTypes.string,
+  quantity: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  img: PropTypes.string,
 };
 
 Card.defaultProps = {
-  name: "",
+  img: "https://bulma.io/images/placeholders/1280x960.png",
 };
 
 export default Card;
