@@ -16,3 +16,17 @@ type Stock
     createdAt: String!
     description: String!
 }
+
+type S3Object {
+    bucket : String!
+    region : String!
+    key : String!
+}
+
+type Picture
+@model
+{
+    id: ID!
+    name: String
+    file: S3Object
+}
