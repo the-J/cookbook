@@ -73,59 +73,64 @@ const PantryView = () => {
     setOpenModalState(false);
   }
 
+  // @TODO probably move this to page
+  const addStockModal = () => (
+    <Modal
+      title="Add New Stock"
+      openState={openModalState}
+      closeModal={() => setOpenModalState(false)}
+      saveChanges={(e) => {
+        e.preventDefault();
+        return createStock();
+      }}
+    >
+      <h3>All fields required</h3>
+      <br />
+      {displayImageCapture && (
+        <ImageCapture
+          startCamera={displayImageCapture}
+          uploadImage={uploadImage}
+        />
+      )}
+      <div className="field is-grouped">
+        <input
+          name="name"
+          className="input is-large mr-3"
+          type="text"
+          value={newStock.name}
+          placeholder="Name"
+          onChange={onChange}
+        />
+        <button
+          onClick={() => setDisplayImageCapture(!displayImageCapture)}
+          // className={`button is-primary ${isLoggingIn && "is-loading"}`}
+          className={`button is-success is-large`}
+          type="submit"
+          // disabled={!isValid}
+        >
+          <BiImageAdd />
+        </button>
+      </div>
+      <input
+        name="quantity"
+        className="input is-large block"
+        type="number"
+        value={newStock.quantity}
+        placeholder="Quantity"
+        onChange={onChange}
+      />
+      <textarea
+        name="description"
+        className="textarea has-fixed-size block"
+        placeholder="Description"
+        onChange={onChange}
+      />
+    </Modal>
+  );
+
   return (
     <>
-      <Modal
-        title="Add New Stock"
-        openState={openModalState}
-        closeModal={() => setOpenModalState(false)}
-        saveChanges={(e) => {
-          e.preventDefault();
-          return createStock();
-        }}
-      >
-        <h3>All fields required</h3>
-        <br />
-        {displayImageCapture && (
-          <ImageCapture
-            startCamera={displayImageCapture}
-            uploadImage={uploadImage}
-          />
-        )}
-        <div className="field is-grouped">
-          <input
-            name="name"
-            className="input is-large mr-3"
-            type="text"
-            value={newStock.name}
-            placeholder="Name"
-            onChange={onChange}
-          />
-          <button
-            onClick={() => setDisplayImageCapture(!displayImageCapture)}
-            // className={`button is-primary ${isLoggingIn && "is-loading"}`}
-            className={`button is-success is-large`}
-            type="submit"
-            // disabled={!isValid}
-          >
-            <BiImageAdd />
-          </button>
-        </div>
-        <input
-          name="quantity"
-          className="input is-large block"
-          type="number"
-          value={newStock.quantity}
-          placeholder="Quantity"
-          onChange={onChange}
-        />
-        <textarea
-          name="description"
-          className="textarea has-fixed-size block"
-          placeholder="Description"
-          onChange={onChange}
-        />
-      </Modal>
+      {addStockModal()}
       <LayoutMain>
         <div
           className="
