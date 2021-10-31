@@ -30,7 +30,7 @@ export type UpdatableUserAttributes = {
 
 export type AuthReducerAction =
   | { type: "IS_LOGGING_IN" }
-  | { type: "LOGIN_SUCCESS"; user: User; userConfig: CognitoUser }
+  | { type: "LOGIN_SUCCESS"; user: User; userConfig: CognitoUser | undefined }
   | { type: "LOGIN_FAILURE"; error: Error | undefined }
   | { type: "LOGOUT_SUCCESS" }
   | {
