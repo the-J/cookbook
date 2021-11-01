@@ -126,9 +126,9 @@ function useAuthContext() {
           type: "LOGIN_SUCCESS",
           userConfig: undefined,
           user: {
-            id: localUser.id,
-            name: localUser.name,
-            email: localUser.email,
+            id: localUser.user.id,
+            name: localUser.user.name,
+            email: localUser.user.email,
           },
         });
       }
