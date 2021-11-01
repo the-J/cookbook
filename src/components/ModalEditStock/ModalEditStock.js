@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/all";
 
 import { Modal } from "../../components/index";
 import { Stock } from "../../models";
 import { useNotif } from "../../context/notif/notifications.context";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/all";
 
 const ModalEditStock = ({ stockToEdit, open, close }) => {
   const { pushNotif } = useNotif();
