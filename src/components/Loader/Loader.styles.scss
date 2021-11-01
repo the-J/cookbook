@@ -1,7 +1,0 @@
-@import '~bulma/bulma.sass';
-
-.bulma-loader-mixin {
-  @include loader;
-  max-width: 100px;
-  max-height: 100px;
-}
