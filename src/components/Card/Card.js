@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { trimToLength } from "../../utils/utils";
 import getImgURL from "../../utils/getImgURL";
 
-const Card = ({ name, date, description, quantity, img }) => {
+const Card = ({ name, quantity, img, editStock }) => {
   const [imgURL, setImgURL] = useState(img);
 
   const getImage = async () => {
@@ -21,8 +21,13 @@ const Card = ({ name, date, description, quantity, img }) => {
 
   return (
     <div
-      className="card m-1"
-      style={{ boxSizing: "border-box", maxWidth: "350px", minWidth: "200px" }}
+      className="card m-1 is-hovered"
+      style={{
+        boxSizing: "border-box",
+        maxWidth: "350px",
+        minWidth: "200px",
+        userSelect: "none",
+      }}
     >
       <div className="card-image">
         <figure className="image is-4by3">
@@ -34,6 +39,12 @@ const Card = ({ name, date, description, quantity, img }) => {
           <div className="media-content">
             <p className="title is-5">{trimToLength(name, 10)}</p>
             {quantity && <p className="subtitle is-6">{quantity}</p>}
+            <button
+              className="button is-pulled-right is-small is-info"
+              onClick={() => editStock()}
+            >
+              Edit
+            </button>
           </div>
         </div>
       </div>
@@ -47,6 +58,7 @@ Card.propTypes = {
   date: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   img: PropTypes.string,
+  editStock: PropTypes.func,
 };
 
 Card.defaultProps = {
