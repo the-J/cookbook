@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { BiImageAdd } from "react-icons/all";
-import React, { useState } from "react";
 import { nanoid } from "nanoid";
 import { DataStore } from "@aws-amplify/datastore";
 
@@ -7,25 +7,38 @@ import { ImageCapture, Modal } from "../../components/index";
 import { Stock } from "../../models";
 import useUploadPhoto from "../../hooks/useUploadImage";
 import { useAuthContext } from "../../context/auth/auth.context";
+import { useNotif } from "../../context/notif/notifications.context";
 
 const initialState = {
-  name: "",
+  name: undefined,
   quantity: 0,
-  description: "",
-  imgName: "",
+  description: undefined,
+  imgName: undefined,
 };
 
-const ModalAddStock = ({ open = false, close }) => {
+const ModalAddStock = ({ open, close }) => {
   const { state } = useAuthContext();
   const { imgName, uploadImage } = useUploadPhoto();
+  const { pushNotif } = useNotif();
 
+  const [isValid, setIsValid] = useState(false);
   const [displayImageCapture, setDisplayImageCapture] = useState(false);
   const [newStock, setNewStock] = useState(initialState);
 
+  useEffect(() => {
+    const { name, quantity, description, imgName } = newStock;
+    const condition = !!name && !!quantity && !!description && !!imgName;
+    setIsValid(condition);
+  }, [newStock]);
+
+  useEffect(() => {
+    setNewStock({ ...newStock, imgName });
+  }, [imgName]);
+
   const onChange = (e) => {
     e.preventDefault();
-    const value = e.target.value;
     const name = e.target.name;
+    const value = name === "quantity" ? Number(e.target.value) : e.target.value;
 
     setNewStock({
       ...newStock,
@@ -33,25 +46,23 @@ const ModalAddStock = ({ open = false, close }) => {
     });
   };
 
-  const createStock = async ()=> {
-    // @TODO validate all that shiiiiiii
+  const createStock = async () => {
     const createdStock = {
       ...newStock,
-      quantity: Number(newStock.quantity),
       id: nanoid(),
       creatorID: state.user.id,
       createdAt: new Date().toISOString(),
       imgName,
     };
 
-    // @TODO createStock
     try {
       await DataStore.save(new Stock({ ...createdStock }));
       setNewStock(initialState);
-    } catch (error) {}
-
-    close();
-  }
+      close();
+    } catch (error) {
+      pushNotif(error.message);
+    }
+  };
 
   return (
     <Modal
@@ -63,6 +74,7 @@ const ModalAddStock = ({ open = false, close }) => {
       }}
       saveChanges={() => createStock()}
       saveChangesText="Add"
+      validationCondition={isValid}
     >
       <h3>All fields required</h3>
       <br />

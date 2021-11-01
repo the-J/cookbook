@@ -1,24 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import { nanoid } from "nanoid";
-import { AiOutlinePlus, BiImageAdd } from "react-icons/all";
+import { AiOutlinePlus } from "react-icons/all";
 
 import { Stock } from "../../models";
 import { LayoutMain } from "../../layouts";
-import {
-  Card,
-  ImageCapture,
-  Modal,
-  ModalAddStock,
-  ModalEditStock,
-} from "../../components";
-import { useAuthContext } from "../../context/auth/auth.context";
-import useUploadPhoto from "../../hooks/useUploadImage";
+import { Card, ModalAddStock, ModalEditStock } from "../../components";
 
 const PantryView = () => {
-  // @TODO create context for this guy
-  // useUploadPhoto should be in ImageCapture
-
   const [addModalOpen, setAddModalOpen] = useState(false);
   const [stock, setStock] = useState([]);
   const [selectedStockID, setSelectedStockID] = useState(null);
@@ -47,12 +35,12 @@ const PantryView = () => {
 
   return (
     <>
-      {
+      {addModalOpen && (
         <ModalAddStock
           open={addModalOpen}
           close={() => setAddModalOpen(false)}
         />
-      }
+      )}
       {selectedStockID && selectedStock && (
         <ModalEditStock
           stock={selectedStock}
