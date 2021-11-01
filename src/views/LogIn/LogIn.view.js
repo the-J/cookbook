@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
 import { useNotif } from "../../context/notif/notifications.context";
@@ -18,7 +18,7 @@ const initialState = {
 };
 
 const LogInView = () => {
-  const { initializeUser } = useAuthContext();
+  const { state, initializeUser } = useAuthContext();
   const history = useHistory();
   const { pushNotif } = useNotif();
   const location = useLocation();
@@ -66,6 +66,10 @@ const LogInView = () => {
       },
     });
   };
+
+  if (state.user) {
+    return <Redirect to={"/pantry"} />;
+  }
 
   return (
     <LayoutMain>
