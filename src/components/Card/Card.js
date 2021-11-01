@@ -38,7 +38,7 @@ const Card = ({ name, quantity, img, editStock }) => {
         <div className="media">
           <div className="media-content">
             <p className="title is-5">{trimToLength(name, 10)}</p>
-            {quantity && <p className="subtitle is-6">{quantity}</p>}
+            {quantity >= 0 && <p className="subtitle is-6">{quantity}</p>}
             <button
               className="button is-pulled-right is-small is-info"
               onClick={() => editStock()}
