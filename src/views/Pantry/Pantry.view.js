@@ -43,9 +43,12 @@ const PantryView = () => {
       )}
       {selectedStockID && selectedStock && (
         <ModalEditStock
-          stock={selectedStock}
+          stockToEdit={selectedStock}
           open={!!selectedStockID}
-          close={() => setSelectedStockID(null)}
+          close={() => {
+            setSelectedStock(null);
+            setSelectedStockID(null);
+          }}
           saveChangesText="Update"
         />
       )}
