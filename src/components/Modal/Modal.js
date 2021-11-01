@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Modal = ({ title, openState, closeModal, saveChanges, children }) => (
+const Modal = ({
+  title,
+  openState,
+  closeModal,
+  saveChanges,
+  saveChangesText,
+  children,
+}) => (
   <div className={`modal ${openState ? "is-active" : ""}`}>
     <div className="modal-background" />
     <div className="modal-card">
@@ -12,7 +19,7 @@ const Modal = ({ title, openState, closeModal, saveChanges, children }) => (
       <section className="modal-card-body">{children}</section>
       <footer className="modal-card-foot">
         <button className="button is-success" onClick={saveChanges}>
-          Add
+          {saveChangesText}
         </button>
         <button className="button" onClick={closeModal}>
           Cancel
