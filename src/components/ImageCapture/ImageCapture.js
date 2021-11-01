@@ -1,6 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { AiOutlineCamera, MdOutlineFlipCameraIos } from "react-icons/all";
+import {
+  AiOutlineCamera,
+  MdOutlineFlipCameraIos,
+  BsHandThumbsDownFill,
+} from "react-icons/all";
 
 let player = {};
 
@@ -119,17 +123,27 @@ const ImageCapture = ({ startCamera, uploadImage }) => {
 
   if (!startCamera) return null;
 
+  const navigation = imageDataURL ? (
+    <div className="buttons block is-grouped is-right">
+      <button onClick={initializeMedia} className="button is-primary is-small">
+        <BsHandThumbsDownFill /> Retake
+      </button>
+    </div>
+  ) : (
+    <div className="buttons block is-grouped is-right">
+      <button onClick={capturePicture} className="button is-primary is-large">
+        <AiOutlineCamera />
+      </button>
+      <button className="button is-info is-large" onClick={switchCamera}>
+        <MdOutlineFlipCameraIos />
+      </button>
+    </div>
+  );
+
   return (
     <div className="block">
       {view}
-      <div className="buttons block is-grouped is-right">
-        <button onClick={capturePicture} className="button is-primary is-large">
-          <AiOutlineCamera />
-        </button>
-        <button className="button is-info is-large" onClick={switchCamera}>
-          <MdOutlineFlipCameraIos />
-        </button>
-      </div>
+      {navigation}
     </div>
   );
 };
