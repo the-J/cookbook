@@ -23,3 +23,4 @@
 - [ ] add lambda to scale added photos to low quality
 - [ ] photo update in stock
 - [ ] properly scale photo in stock list
+- [ ] get img from cache... 
