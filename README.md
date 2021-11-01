@@ -1,28 +1,25 @@
-## What's inside
+# CookBook
+## Simple project for handling your personal Pantry
 
-### Template:
+### Pages
+- log-in
+  - handling all form validation and feedback
+- sign-in
+  - handling all form validation and feedback
+- pantry
+  - add name
+  - add quantity 
+  - add description
+  - add photo 
+    - take photo on web and mobile
+    - change camera if available
+    - save to S3
+    
 
-- cra
-- pwa
-- amplify
-- bulma
-- scss
-
-#### Req
-
-Node 12.22.6
-
-### First start
-
-```
-amplify init
-```
-
-and roll with it. 
-
-
-### Local dev.
-
-#### API
-run `amplify mock api` and open browser `http://localhost:20002`. 
-
+### TODO
+- [ ] confirmation email should redirect to CookBook
+- [ ] inputs validation in stock modals
+- [ ] restrict possible emails registration (only selected emails should sign-in)
+- [ ] add lambda to scale added photos to low quality
+- [ ] photo update in stock
+- [ ] properly scale photo in stock list
