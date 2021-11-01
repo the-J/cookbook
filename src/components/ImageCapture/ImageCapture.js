@@ -105,6 +105,7 @@ const ImageCapture = ({ startCamera, uploadImage }) => {
   );
 
   const stopCamera = () => {
+    setImageDataURL(null);
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => stream.getTracks().forEach((track) => track.stop()))
