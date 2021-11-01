@@ -14,10 +14,10 @@ const PrivateRoute = ({ children, path }) => {
     if (!state.user) {
       getUser();
     }
-  }, []);
+  }, [state]);
 
   return (
-    <Route path={path} exact>
+    <Route path={path}>
       {state.user ? children : <Redirect to={{ pathname: "/log-in" }} />}
     </Route>
   );
