@@ -9,6 +9,7 @@ const Modal = ({
   saveChangesText,
   validationCondition = false,
   children,
+  buttonClasses = "is-success",
 }) => (
   <div className={`modal ${openState ? "is-active" : ""}`}>
     <div className="modal-background" />
@@ -20,7 +21,7 @@ const Modal = ({
       <section className="modal-card-body">{children}</section>
       <footer className="modal-card-foot">
         <button
-          className="button is-success"
+          className={`button ${buttonClasses}`}
           onClick={saveChanges}
           disabled={!validationCondition}
         >
