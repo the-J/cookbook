@@ -62,17 +62,6 @@ function useAuthContext() {
   const setUserInLocalStorage = (user: User) =>
     localStorage.setItem(USER_LOCALSTORAGE_KEY, JSON.stringify({ user: user }));
 
-  const getUserFromLocalStorage = useMemo(():
-    | (User &
-        CognitoUser & {
-          attributes: CognitoUserAttributes;
-          username: String;
-        })
-    | undefined => {
-    const user = localStorage.getItem(USER_LOCALSTORAGE_KEY);
-    return user ? JSON.parse(user) : undefined;
-  }, []);
-
   const deleteLocalStorageData = () => {
     localStorage.removeItem(IDENTITY_LOCALSTORAGE_KEY);
     localStorage.removeItem(JWT_LOCALSTORAGE_KEY);
@@ -95,43 +84,30 @@ function useAuthContext() {
     }
   }, []);
 
-  // @TODO main got... I'll need to clean types for user and cognito user cause this is a mess
   const initializeUser = useCallback(async () => {
+    console.log("initialize user");
     try {
-      const localUser = getUserFromLocalStorage;
+      const cognitoUser = await getCurrentUser();
+      setTokenInLocalStorage(cognitoUser);
+      setUserInLocalStorage({
+        id: cognitoUser.username,
+        email: cognitoUser.attributes.email,
+        name: cognitoUser.attributes.name,
+      });
+      await setIdentityIdInLocalStorage();
+      const { attributes } = cognitoUser;
 
-      if (!localUser) {
-        const cognitoUser = await getCurrentUser();
-        setTokenInLocalStorage(cognitoUser);
-        setUserInLocalStorage({
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        userConfig: cognitoUser,
+        user: {
           id: cognitoUser.username,
-          email: cognitoUser.attributes.email,
-          name: cognitoUser.attributes.name,
-        });
-        await setIdentityIdInLocalStorage();
-        const { attributes } = cognitoUser;
-
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          userConfig: cognitoUser,
-          user: {
-            id: cognitoUser.username,
-            name: attributes.name,
-            email: attributes.email,
-            isAdmin: attributes["custom:isAdmin"],
-          },
-        });
-      } else {
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          userConfig: undefined,
-          user: {
-            id: localUser.user.id,
-            name: localUser.user.name,
-            email: localUser.user.email,
-          },
-        });
-      }
+          name: attributes.name,
+          email: attributes.email,
+          picture: attributes.picture,
+          isAdmin: attributes["custom:isAdmin"],
+        },
+      });
     } catch (e) {
       console.log({ e });
       if (e instanceof Error) {
