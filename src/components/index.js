@@ -10,3 +10,4 @@ export { default as ImageCapture } from "./ImageCapture/ImageCapture";
 export { default as Modal } from "./Modal/Modal";
 export { default as ModalEditStock } from "./ModalEditStock/ModalEditStock";
 export { default as ModalAddStock } from "./ModalAddStock/ModalAddStock";
+export { default as ModalDeleteStock } from "./ModalDeleteStock/ModalDeleteStock";
