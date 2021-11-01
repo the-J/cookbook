@@ -122,17 +122,17 @@ const LogInView = () => {
 
             <div className="buttons block is-grouped level">
               <button
+                className="button is-info is-right"
+                onClick={() => history.push("sign-up")}
+              >
+                Sign up
+              </button>
+              <button
                 className={`button is-success ${isLoggingIn && "is-loading"}`}
                 type="submit"
                 disabled={!isValid}
               >
                 Log in
-              </button>
-              <button
-                className="button is-info is-right"
-                onClick={() => history.push("sign-up")}
-              >
-                Sign up
               </button>
             </div>
           </form>
