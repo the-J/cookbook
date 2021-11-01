@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BiImageAdd } from "react-icons/all";
+import { AiOutlineMinus, AiOutlinePlus, BiImageAdd } from "react-icons/all";
 import { nanoid } from "nanoid";
 import { DataStore } from "@aws-amplify/datastore";
 
@@ -60,7 +60,7 @@ const ModalAddStock = ({ open, close }) => {
       setNewStock(initialState);
       close();
     } catch (error) {
-      pushNotif(error.message);
+      pushNotif(error.message, "err");
     }
   };
 
@@ -98,19 +98,48 @@ const ModalAddStock = ({ open, close }) => {
           <BiImageAdd />
         </button>
       </div>
-      <input
-        name="quantity"
-        className="input is-large block"
-        type="number"
-        value={newStock.quantity}
-        placeholder="Quantity"
-        onChange={onChange}
-      />
+      <div className="columns block">
+        <div className="column is-4">
+          <input
+            name="quantity"
+            className="input is-large"
+            type="text"
+            value={newStock.quantity}
+            placeholder="Quantity"
+            readOnly
+          />
+        </div>
+        <div className="column is-8">
+          <div className="columns">
+            <div className="column is-6">
+              <button
+                className="button is-info is-large is-fullwidth"
+                onClick={() =>
+                  setNewStock({ ...newStock, quantity: newStock.quantity + 1 })
+                }
+              >
+                <AiOutlinePlus />
+              </button>
+            </div>
+            <div className="column is-6">
+              <button
+                className="button is-primary is-large is-fullwidth"
+                onClick={() =>
+                  setNewStock({ ...newStock, quantity: newStock.quantity - 1 })
+                }
+              >
+                <AiOutlineMinus />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <textarea
         name="description"
         className="textarea has-fixed-size block"
         placeholder="Description"
         onChange={onChange}
+        style={{ fontSize: "20px" }}
       />
     </Modal>
   );
