@@ -117,6 +117,8 @@ const ImageCapture = ({ startCamera, uploadImage }) => {
     return () => stopCamera();
   }, [startCamera]);
 
+  if (!startCamera) return null;
+
   return (
     <div className="block">
       {view}
