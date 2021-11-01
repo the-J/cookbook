@@ -7,6 +7,7 @@ const Modal = ({
   closeModal,
   saveChanges,
   saveChangesText,
+  validationCondition = false,
   children,
 }) => (
   <div className={`modal ${openState ? "is-active" : ""}`}>
@@ -18,7 +19,11 @@ const Modal = ({
       </header>
       <section className="modal-card-body">{children}</section>
       <footer className="modal-card-foot">
-        <button className="button is-success" onClick={saveChanges}>
+        <button
+          className="button is-success"
+          onClick={saveChanges}
+          disabled={!validationCondition}
+        >
           {saveChangesText}
         </button>
         <button className="button" onClick={closeModal}>
