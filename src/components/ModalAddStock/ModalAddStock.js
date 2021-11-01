@@ -85,7 +85,7 @@ const ModalAddStock = ({ open, close }) => {
       <div className="field is-grouped">
         <input
           name="name"
-          className="input is-large mr-3"
+          className="input is-large"
           type="text"
           value={newStock.name}
           placeholder="Name"
@@ -93,7 +93,7 @@ const ModalAddStock = ({ open, close }) => {
         />
         <button
           onClick={() => setDisplayImageCapture(!displayImageCapture)}
-          className={`button is-success is-large`}
+          className={`button is-success is-large ml-3`}
         >
           <BiImageAdd />
         </button>
@@ -123,7 +123,7 @@ const ModalAddStock = ({ open, close }) => {
             </div>
             <div className="column is-6">
               <button
-                className="button is-primary is-large is-fullwidth"
+                className="button is-success is-large is-fullwidth"
                 onClick={() =>
                   setNewStock({ ...newStock, quantity: newStock.quantity - 1 })
                 }

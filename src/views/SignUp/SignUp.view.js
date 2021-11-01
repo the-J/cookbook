@@ -133,7 +133,7 @@ const SignUpView = () => {
 
             <div className="buttons block is-grouped level">
               <button
-                className={`button is-primary ${isSigningUp && "is-loading"}`}
+                className={`button is-success ${isSigningUp && "is-loading"}`}
                 type="submit"
                 disabled={!isValid}
               >

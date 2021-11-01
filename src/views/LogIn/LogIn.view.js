@@ -118,7 +118,7 @@ const LogInView = () => {
 
             <div className="buttons block is-grouped level">
               <button
-                className={`button is-primary ${isLoggingIn && "is-loading"}`}
+                className={`button is-success ${isLoggingIn && "is-loading"}`}
                 type="submit"
                 disabled={!isValid}
               >

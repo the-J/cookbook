@@ -104,7 +104,7 @@ const ModalEditStock = ({ stockToEdit, open, close }) => {
             </div>
             <div className="column is-6">
               <button
-                className="button is-primary is-large is-fullwidth"
+                className="button is-success is-large is-fullwidth"
                 onClick={() =>
                   setNewStock({ ...newStock, quantity: newStock.quantity - 1 })
                 }

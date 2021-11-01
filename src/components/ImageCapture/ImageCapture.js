@@ -125,13 +125,13 @@ const ImageCapture = ({ startCamera, uploadImage }) => {
 
   const navigation = imageDataURL ? (
     <div className="buttons block is-grouped is-right">
-      <button onClick={initializeMedia} className="button is-primary is-small">
+      <button onClick={initializeMedia} className="button is-success is-small">
         <BsHandThumbsDownFill /> Retake
       </button>
     </div>
   ) : (
     <div className="buttons block is-grouped is-right">
-      <button onClick={capturePicture} className="button is-primary is-large">
+      <button onClick={capturePicture} className="button is-success is-large">
         <AiOutlineCamera />
       </button>
       <button className="button is-info is-large" onClick={switchCamera}>

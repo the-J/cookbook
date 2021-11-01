@@ -78,7 +78,7 @@ const Navbar = () => {
           <div className="navbar-end">
             <div className="navbar-item">
               <div className="buttons">
-                <button className="button is-primary" onClick={handleSignOut}>
+                <button className="button" onClick={handleSignOut}>
                   <strong>Log out</strong>
                 </button>
               </div>
