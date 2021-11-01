@@ -4,20 +4,29 @@ import { AiOutlinePlus } from "react-icons/all";
 
 import { Stock } from "../../models";
 import { LayoutMain } from "../../layouts";
-import { Card, ModalAddStock, ModalEditStock } from "../../components";
+import {
+  Card,
+  ModalAddStock,
+  ModalEditStock,
+  ModalDeleteStock,
+} from "../../components";
 
 const PantryView = () => {
   const [addModalOpen, setAddModalOpen] = useState(false);
-  const [stock, setStock] = useState([]);
-  const [selectedStockID, setSelectedStockID] = useState(null);
+
+  const [stockList, setStockList] = useState([]);
   const [selectedStock, setSelectedStock] = useState(null);
 
+  const [selectedEditStockID, setSelectedEditStockID] = useState(null);
+  const [selectedDeleteStockID, setSelectedDeleteStockID] = useState(null);
+
   useEffect(() => {
-    if (selectedStockID) {
-      const selected = stock.find((el) => el.id === selectedStockID);
+    if (selectedEditStockID || selectedDeleteStockID) {
+      const id = selectedEditStockID || selectedDeleteStockID;
+      const selected = stockList.find((el) => el.id === id);
       setSelectedStock(selected);
     }
-  }, [selectedStockID]);
+  }, [selectedEditStockID, selectedDeleteStockID]);
 
   useEffect(() => {
     fetchStock();
@@ -29,8 +38,8 @@ const PantryView = () => {
   }, []);
 
   async function fetchStock() {
-    const stock = await DataStore.query(Stock);
-    setStock(stock ? stock : []);
+    const stockList = await DataStore.query(Stock);
+    setStockList(stockList ? stockList : []);
   }
 
   return (
@@ -41,15 +50,26 @@ const PantryView = () => {
           close={() => setAddModalOpen(false)}
         />
       )}
-      {selectedStockID && selectedStock && (
+      {selectedEditStockID && selectedStock && (
         <ModalEditStock
           stockToEdit={selectedStock}
-          open={!!selectedStockID}
+          open={!!selectedEditStockID}
           close={() => {
             setSelectedStock(null);
-            setSelectedStockID(null);
+            setSelectedEditStockID(null);
           }}
           saveChangesText="Update"
+        />
+      )}
+      {selectedDeleteStockID && selectedStock && (
+        <ModalDeleteStock
+          stockToDelete={selectedStock}
+          open={!!selectedDeleteStockID}
+          close={() => {
+            setSelectedStock(null);
+            setSelectedDeleteStockID(null);
+          }}
+          saveChangesText="Confirm"
         />
       )}
       <LayoutMain>
@@ -71,9 +91,7 @@ const PantryView = () => {
               type="button"
               onClick={() => setAddModalOpen(true)}
             >
-              <span className="icon">
-                <AiOutlinePlus />
-              </span>
+              <AiOutlinePlus /> Add Stock
             </button>
           </div>
         </div>
@@ -90,8 +108,8 @@ const PantryView = () => {
             p-0
         "
           >
-            {stock.length > 0 ? (
-              stock.map((el, i) => {
+            {stockList.length > 0 ? (
+              stockList.map((el, i) => {
                 // @TODO wrap this props into Stock
                 return (
                   <Card
@@ -101,7 +119,8 @@ const PantryView = () => {
                     quantity={el.quantity}
                     key={el.id}
                     img={el.imgName}
-                    editStock={() => setSelectedStockID(el.id)}
+                    editStock={() => setSelectedEditStockID(el.id)}
+                    deleteStock={() => setSelectedDeleteStockID(el.id)}
                   />
                 );
               })
