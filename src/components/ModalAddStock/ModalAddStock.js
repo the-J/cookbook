@@ -22,7 +22,7 @@ const ModalAddStock = ({ open = false, close }) => {
   const [displayImageCapture, setDisplayImageCapture] = useState(false);
   const [newStock, setNewStock] = useState(initialState);
 
-  function onChange(e) {
+  const onChange = (e) => {
     e.preventDefault();
     const value = e.target.value;
     const name = e.target.name;
@@ -31,9 +31,9 @@ const ModalAddStock = ({ open = false, close }) => {
       ...newStock,
       [name]: value,
     });
-  }
+  };
 
-  async function createStock() {
+  const createStock = async ()=> {
     // @TODO validate all that shiiiiiii
     const createdStock = {
       ...newStock,
@@ -57,18 +57,19 @@ const ModalAddStock = ({ open = false, close }) => {
     <Modal
       title="Add New Stock"
       openState={open}
-      closeModal={() => close()}
+      closeModal={() => {
+        setDisplayImageCapture(false);
+        close();
+      }}
       saveChanges={() => createStock()}
       saveChangesText="Add"
     >
       <h3>All fields required</h3>
       <br />
-      {displayImageCapture && (
-        <ImageCapture
-          startCamera={displayImageCapture}
-          uploadImage={uploadImage}
-        />
-      )}
+      <ImageCapture
+        startCamera={displayImageCapture}
+        uploadImage={uploadImage}
+      />
       <div className="field is-grouped">
         <input
           name="name"
