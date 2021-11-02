@@ -78,9 +78,4 @@ Card.propTypes = {
   editStock: PropTypes.func,
 };
 
-// @TODO this is stupid
-Card.defaultProps = {
-  img: "https://bulma.io/images/placeholders/1280x960.png",
-};
-
 export default Card;
