@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
 import { useNotif } from "../../context/notif/notifications.context";
@@ -18,7 +18,7 @@ const initialState = {
 };
 
 const LogInView = () => {
-  const { state, initializeUser } = useAuthContext();
+  const { initializeUser } = useAuthContext();
   const history = useHistory();
   const { pushNotif } = useNotif();
   const location = useLocation();
@@ -66,10 +66,6 @@ const LogInView = () => {
       },
     });
   };
-
-  if (state.user) {
-    return <Redirect to={"/pantry"} />;
-  }
 
   return (
     <LayoutMain>
@@ -122,17 +118,17 @@ const LogInView = () => {
 
             <div className="buttons block is-grouped level">
               <button
-                className="button is-info is-right"
-                onClick={() => history.push("sign-up")}
-              >
-                Sign up
-              </button>
-              <button
                 className={`button is-success ${isLoggingIn && "is-loading"}`}
                 type="submit"
                 disabled={!isValid}
               >
                 Log in
+              </button>
+              <button
+                className="button is-info is-right"
+                onClick={() => history.push("sign-up")}
+              >
+                Sign up
               </button>
             </div>
           </form>

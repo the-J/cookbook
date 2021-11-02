@@ -1,25 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 import { useAuthContext } from "../context/auth/auth.context";
+import { authUser } from "../auth/authUser";
 
-const PrivateRoute = ({ children, path }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const { state, initializeUser } = useAuthContext();
+  const [isLoggedIn, setIsLoggedIn] = useState(null);
 
-  const getUser = async () => {
-    await initializeUser();
+  const setUser = async () => {
+    let isAuth = await authUser();
+    if (!isAuth) await initializeUser();
+    if (state.user) isAuth = true;
+    setIsLoggedIn(isAuth);
   };
 
   useEffect(() => {
-    if (!state.user) {
-      getUser();
-    }
-  }, [state]);
+    setUser();
+  }, []);
+
+  if (!isLoggedIn) {
+    return null;
+  }
 
   return (
-    <Route path={path}>
-      {state.user ? children : <Redirect to={{ pathname: "/log-in" }} />}
-    </Route>
+    <Route
+      {...rest}
+      exact
+      render={(props) =>
+        isLoggedIn ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={{ pathname: "/log-in" }} />
+        )
+      }
+    />
   );
 };
 
