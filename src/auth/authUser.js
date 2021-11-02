@@ -2,9 +2,10 @@ import Auth from "@aws-amplify/auth";
 
 export const authUser = async () => {
   try {
-    return await Auth.currentSession().isValid();
+    const curSession = await Auth.currentSession();
+    return curSession ? curSession.isValid() : false;
   } catch (error) {
-    return error.message;
+    return false;
   }
 };
 
