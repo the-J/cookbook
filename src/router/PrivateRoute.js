@@ -9,15 +9,18 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(null);
 
   const setUser = async () => {
-    let isAuth = await authUser();
-    if (!isAuth) await initializeUser();
-    if (state.user) isAuth = true;
+    await initializeUser();
+    const isAuth = await authUser();
     setIsLoggedIn(isAuth);
   };
 
   useEffect(() => {
     setUser();
   }, []);
+
+  useEffect(() => {
+    if (state.user) setIsLoggedIn(true);
+  }, [state.user]);
 
   if (!isLoggedIn) {
     return null;
