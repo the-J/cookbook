@@ -18,7 +18,7 @@ const initialState = {
 
 const ModalAddStock = ({ open, close }) => {
   const { state } = useAuthContext();
-  const { imgName, uploadImage } = useUploadPhoto();
+  const { imgName, imgUploading, uploadImage } = useUploadPhoto();
   const { pushNotif } = useNotif();
 
   const [isValid, setIsValid] = useState(false);
@@ -26,8 +26,8 @@ const ModalAddStock = ({ open, close }) => {
   const [newStock, setNewStock] = useState(initialState);
 
   useEffect(() => {
-    const { name, quantity, description, imgName } = newStock;
-    const condition = !!name && !!quantity && !!description && !!imgName;
+    const { name, quantity, description } = newStock;
+    const condition = !!name && !!quantity && !!description;
     setIsValid(condition);
   }, [newStock]);
 
@@ -47,12 +47,16 @@ const ModalAddStock = ({ open, close }) => {
   };
 
   const createStock = async () => {
+    const newImg = imgName
+      ? imgName
+      : "https://bulma.io/images/placeholders/1280x960.png";
+
     const createdStock = {
       ...newStock,
       id: nanoid(),
       creatorID: state.user.id,
       createdAt: new Date().toISOString(),
-      imgName,
+      imgName: newImg,
     };
 
     try {
@@ -74,7 +78,7 @@ const ModalAddStock = ({ open, close }) => {
       }}
       saveChanges={() => createStock()}
       saveChangesText="Add"
-      validationCondition={isValid}
+      validationCondition={isValid && !imgUploading}
     >
       <h3>All fields required</h3>
       <br />
