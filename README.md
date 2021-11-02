@@ -17,8 +17,9 @@
     
 
 ### TODO
+- [ ] this was stupid - I need store
 - [ ] spend more time on camera handling implementation
-- [ ] confirmation email should redirect to CookBook
+- [ ] confirmation email should redirect to CookBook -> on AWS
 - [ ] inputs validation in stock modals
 - [ ] restrict possible emails registration (only selected emails should sign-in)
 - [ ] add lambda to scale added photos to low quality
