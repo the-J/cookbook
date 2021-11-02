@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { useAuthContext } from "../../context/auth/auth.context";
 import { useNotif } from "../../context/notif/notifications.context";
@@ -10,7 +10,7 @@ const Navbar = () => {
   const history = useHistory();
   const { pushNotif } = useNotif();
   const {
-    state: { isAuthenticated, user },
+    state: { isAuthenticated },
     logOutUser,
   } = useAuthContext();
   const [dropdownState, setDropdownState] = useState(false);
