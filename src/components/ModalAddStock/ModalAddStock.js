@@ -91,7 +91,7 @@ const ModalAddStock = ({ open, close }) => {
           name="name"
           className="input is-large"
           type="text"
-          value={newStock.name}
+          value={newStock.name || ""}
           placeholder="Name"
           onChange={onChange}
         />
