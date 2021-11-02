@@ -1,35 +1,44 @@
 import React, { useEffect, useState } from "react";
 import { DataStore } from "@aws-amplify/datastore";
-import { AiOutlinePlus, AiOutlineMinus } from "react-icons/all";
+import { AiOutlinePlus, AiOutlineMinus, BiImageAdd } from "react-icons/all";
 
-import { Modal } from "../../components/index";
+import { ImageCapture, Modal } from "../../components/index";
 import { Stock } from "../../models";
 import { useNotif } from "../../context/notif/notifications.context";
+import useUploadPhoto from "../../hooks/useUploadImage";
 
 const ModalEditStock = ({ stockToEdit, open, close }) => {
   const { pushNotif } = useNotif();
+  const { imgName, imgUploading, uploadImage } = useUploadPhoto();
 
   const [newStock, setNewStock] = useState(stockToEdit);
   const [isValid, setIsValid] = useState(false);
+  const [displayImageCapture, setDisplayImageCapture] = useState(false);
 
   useEffect(() => {
-    const { name, quantity, description } = newStock;
+    const { name, quantity, description, imgName: newImgName } = newStock;
     const {
       name: oldName,
       quantity: oldQuantity,
       description: oldDescription,
+      imgName: oldImgName,
     } = stockToEdit;
 
     const condition =
       name !== oldName ||
       quantity !== oldQuantity ||
-      description !== oldDescription;
+      description !== oldDescription ||
+      oldImgName !== newImgName;
 
     setIsValid(condition);
   }, [newStock]);
 
+  useEffect(() => {
+    if (imgName) setNewStock({ ...newStock, imgName });
+  }, [imgName]);
+
   const updateStock = async () => {
-    const { name, quantity, description } = newStock;
+    const { name, quantity, description, imgName: newImgName } = newStock;
 
     try {
       await DataStore.save(
@@ -37,6 +46,7 @@ const ModalEditStock = ({ stockToEdit, open, close }) => {
           updated.name = name;
           updated.description = description;
           updated.quantity = quantity;
+          updated.imgName = newImgName || stockToEdit.imgName;
         })
       );
 
@@ -67,18 +77,30 @@ const ModalEditStock = ({ stockToEdit, open, close }) => {
       }}
       saveChanges={() => updateStock()}
       saveChangesText="Update"
-      validationCondition={isValid}
+      validationCondition={isValid && !imgUploading}
     >
       <h3>All fields required</h3>
       <br />
-      <input
-        name="name"
-        className="input is-large block"
-        type="text"
-        value={newStock.name}
-        placeholder="Name"
-        onChange={onChange}
+      <ImageCapture
+        startCamera={displayImageCapture}
+        uploadImage={uploadImage}
       />
+      <div className="field is-grouped">
+        <input
+          name="name"
+          className="input is-large block"
+          type="text"
+          value={newStock.name}
+          placeholder="Name"
+          onChange={onChange}
+        />
+        <button
+          onClick={() => setDisplayImageCapture(!displayImageCapture)}
+          className={`button is-success is-large ml-3`}
+        >
+          <BiImageAdd />
+        </button>
+      </div>
       <div className="columns block">
         <div className="column is-4">
           <input
